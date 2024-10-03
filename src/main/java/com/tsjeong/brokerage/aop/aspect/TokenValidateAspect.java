@@ -1,7 +1,7 @@
 package com.tsjeong.brokerage.aop.aspect;
 
-import com.tsjeong.brokerage.aop.ArgIndexFinder;
-import com.tsjeong.brokerage.aop.MethodFinder;
+import com.tsjeong.brokerage.aop.util.ArgIndexFinder;
+import com.tsjeong.brokerage.aop.util.MethodFinder;
 import com.tsjeong.brokerage.aop.annotation.TokenValidate;
 import com.tsjeong.brokerage.aop.annotation.UserIdInject;
 import com.tsjeong.brokerage.exception.ErrorCode;
