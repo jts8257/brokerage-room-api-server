@@ -1,0 +1,48 @@
+services:
+  # MySQL Service
+  mysql-service:
+    image: mysql:8.0
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: app_db
+      MYSQL_USER: db_user
+      MYSQL_PASSWORD: db_user_password
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - backend_network
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost --password=root_password"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  # Spring Boot Application
+  room-api-service:
+    build:
+      context: ../
+      dockerfile: package/Dockerfile
+    container_name: room-api-service
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-service:3306/app_db
+      SPRING_DATASOURCE_USERNAME: db_user
+      SPRING_DATASOURCE_PASSWORD: db_user_password
+    ports:
+      - "8080:8080"
+    depends_on:
+      mysql-service:
+        condition: service_healthy
+    networks:
+      - backend_network
+
+networks:
+  backend_network:
+    driver: bridge
+
+volumes:
+  mysql_data:

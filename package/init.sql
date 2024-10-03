@@ -1,0 +1,6 @@
+CREATE DATABASE IF NOT EXISTS app_db;
+
+CREATE USER IF NOT EXISTS 'db_user'@'%' IDENTIFIED BY 'db_user_password';
+GRANT ALL PRIVILEGES ON app_db.* TO 'db_user'@'%';
+
+FLUSH PRIVILEGES;
