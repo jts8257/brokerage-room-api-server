@@ -1,7 +1,7 @@
 package com.tsjeong.brokerage.dto.user;
 
 public record UserReadDto (
-        int id,
+        long id,
         String email,
         String password
-) { }
+) {}

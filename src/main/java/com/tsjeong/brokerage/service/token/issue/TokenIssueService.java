@@ -1,7 +1,7 @@
 package com.tsjeong.brokerage.service.token.issue;
 
 import com.tsjeong.brokerage.dto.token.TokenIssueDto;
-import com.tsjeong.brokerage.entity.Users;
+import com.tsjeong.brokerage.entity.user.Users;
 import com.tsjeong.brokerage.exception.ErrorCode;
 import com.tsjeong.brokerage.repsoitory.UsersRepository;
 import lombok.RequiredArgsConstructor;

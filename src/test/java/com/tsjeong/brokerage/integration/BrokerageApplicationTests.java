@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 class BrokerageApplicationTests extends IntegrationTestBase{
 
 	@Test
-	void contextLoads() {
-	}
+	void contextLoads() {}
 
 }
