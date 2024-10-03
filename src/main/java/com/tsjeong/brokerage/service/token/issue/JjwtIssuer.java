@@ -15,11 +15,11 @@ import java.util.Map;
 import java.util.Objects;
 
 @Component
-public class JjwtTokenIssuer implements TokenIssuer {
+public class JjwtIssuer implements TokenIssuer {
     private final SecretKey jwsSignKey;
     private final Long jwtLifeTime;
 
-    public JjwtTokenIssuer(
+    public JjwtIssuer(
             @Qualifier("jwsSignKey") SecretKey jwsSignKey,
             @Qualifier("jwtLifeTime") Long jwtLifeTime
     ) {
@@ -33,6 +33,7 @@ public class JjwtTokenIssuer implements TokenIssuer {
             throw ErrorCode.INVALID_TOKEN_PROVIDE_PARAM.build("인증 수단은 적어도 하나의 payload 를 포함하고 있어야 합니다.");
         }
 
+        System.out.println("jwtLifeTime: " + jwtLifeTime);
         ZonedDateTime now = ZonedDateTime.now();
         ZonedDateTime expiration = now.plusSeconds(jwtLifeTime);
         String token = Jwts.builder()

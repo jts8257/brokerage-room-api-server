@@ -20,3 +20,8 @@ spring:
   hibernate:
     naming:
       physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+
+  encryption:
+    jwt:
+      secret-key: A=D_-EdddC-bJ-PKMJO-1950as!
+      lifetime: 3600

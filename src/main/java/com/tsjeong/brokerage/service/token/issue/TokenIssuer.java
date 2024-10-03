@@ -1,10 +1,10 @@
-package com.tsjeong.brokerage.service.token;
+package com.tsjeong.brokerage.service.token.issue;
+
+import com.tsjeong.brokerage.dto.token.TokenIssueDto;
 
 import java.util.Map;
 
-interface TokenIssuer {
+public interface TokenIssuer {
 
-    String issue(Map<String, Object> payload, long lifetime);
-
-    long lifeTimeInSeconds = 60 * 60 * 24 * 7; // 7days access token lifetime
+    TokenIssueDto issue(Map<String, Object> payload);
 }

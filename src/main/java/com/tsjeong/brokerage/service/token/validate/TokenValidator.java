@@ -1,4 +1,4 @@
-package com.tsjeong.brokerage.service.token;
+package com.tsjeong.brokerage.service.token.validate;
 
 import java.util.Map;
 
