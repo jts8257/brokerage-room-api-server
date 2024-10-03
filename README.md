@@ -12,5 +12,5 @@ $> docker compose -f ./package/docker-compose.yml up --build -d
 # 컨테이너 중지
 $> docker compose -f ./package/docker-compose.yml stop 
 # 컨테이너 삭제
-$> docker compose -f ./package/docker-compose.yml down -v
+$> docker compose -f ./package/docker-compose.yml down
 ```

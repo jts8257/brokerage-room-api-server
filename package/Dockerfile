@@ -19,7 +19,7 @@ RUN ./gradlew build -x test --stacktrace || return 0
 COPY . .
 
 # Build the application using Gradle Wrapper, skipping tests
-RUN ./gradlew clean build -x test --stacktrace
+RUN ./gradlew clean build --stacktrace
 
 # Stage 2: Package the application using a lightweight image
 FROM openjdk:17-ea-3-buster
