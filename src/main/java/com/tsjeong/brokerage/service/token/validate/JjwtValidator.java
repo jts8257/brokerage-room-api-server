@@ -1,6 +1,5 @@
 package com.tsjeong.brokerage.service.token.validate;
 
-import com.tsjeong.brokerage.exception.ErrorCode;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
@@ -15,11 +14,11 @@ import static com.tsjeong.brokerage.exception.ErrorCode.INVALID_TOKEN;
 import static com.tsjeong.brokerage.service.token.issue.TokenIssueService.PAYLOAD_USER_ID_KEY;
 
 @Component
-public class JjwtTokenValidator implements TokenValidator {
+public class JjwtValidator implements TokenValidator {
 
     private final SecretKey jwsSignKey;
 
-    public JjwtTokenValidator(
+    public JjwtValidator(
             @Qualifier("jwsSignKey") SecretKey jwsSignKey
     ) {
         this.jwsSignKey = jwsSignKey;
