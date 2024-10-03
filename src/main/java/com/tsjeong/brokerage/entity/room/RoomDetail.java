@@ -9,7 +9,7 @@ import javax.persistence.*;
 
 @Getter
 @Entity
-@Table(name = "rooms")
+@Table(name = "room_details")
 @Builder
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
@@ -24,5 +24,6 @@ public class RoomDetail extends TimeStampBase {
     @OneToOne(mappedBy = "detail", fetch = FetchType.EAGER)
     private Room room;
 
+    @Column(columnDefinition = "TEXT")
     private String description;
 }
