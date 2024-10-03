@@ -1,6 +1,6 @@
 package com.tsjeong.brokerage.dto.user;
 
-public record UserReadDto (
+public record UserReadResponse(
         long id,
         String email,
         String password

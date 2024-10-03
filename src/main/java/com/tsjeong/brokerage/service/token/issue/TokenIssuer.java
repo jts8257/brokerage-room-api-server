@@ -1,10 +1,10 @@
 package com.tsjeong.brokerage.service.token.issue;
 
-import com.tsjeong.brokerage.dto.token.TokenIssueDto;
+import com.tsjeong.brokerage.dto.token.TokenIssueResponse;
 
 import java.util.Map;
 
 public interface TokenIssuer {
 
-    TokenIssueDto issue(Map<String, Object> payload);
+    TokenIssueResponse issue(Map<String, Object> payload);
 }

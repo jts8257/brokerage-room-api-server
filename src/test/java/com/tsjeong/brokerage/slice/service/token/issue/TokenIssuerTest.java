@@ -2,7 +2,7 @@ package com.tsjeong.brokerage.slice.service.token.issue;
 
 
 import com.tsjeong.brokerage.config.JwtConfig;
-import com.tsjeong.brokerage.dto.token.TokenIssueDto;
+import com.tsjeong.brokerage.dto.token.TokenIssueResponse;
 import com.tsjeong.brokerage.exception.ApplicationException;
 import com.tsjeong.brokerage.service.token.issue.JjwtIssuer;
 import com.tsjeong.brokerage.service.token.issue.TokenIssuer;
@@ -32,15 +32,15 @@ public class TokenIssuerTest {
         Map<String, Object> claims = Map.of("userId", "12345");
 
         // When
-        TokenIssueDto tokenIssueDto = tokenIssuer.issue(claims);
+        TokenIssueResponse tokenIssueResponse = tokenIssuer.issue(claims);
 
         // Then
-        assertNotNull(tokenIssueDto);
-        assertNotNull(tokenIssueDto.token());
-        assertNotNull(tokenIssueDto.expiredAt());
-        assertNotNull(tokenIssueDto.timeZone());
+        assertNotNull(tokenIssueResponse);
+        assertNotNull(tokenIssueResponse.token());
+        assertNotNull(tokenIssueResponse.expiredAt());
+        assertNotNull(tokenIssueResponse.timeZone());
 
-        assertEquals("UTC", tokenIssueDto.timeZone());
+        assertEquals("UTC", tokenIssueResponse.timeZone());
     }
 
     @Test

@@ -1,7 +1,7 @@
 package com.tsjeong.brokerage.slice.service.token.validate;
 
 import com.tsjeong.brokerage.config.JwtConfig;
-import com.tsjeong.brokerage.dto.token.TokenIssueDto;
+import com.tsjeong.brokerage.dto.token.TokenIssueResponse;
 import com.tsjeong.brokerage.exception.ApplicationException;
 import com.tsjeong.brokerage.service.token.issue.JjwtIssuer;
 import com.tsjeong.brokerage.service.token.issue.TokenIssuer;
@@ -38,12 +38,12 @@ public class TokenValidatorTest {
     @Test
     void whenValidTokenProvidedReturnValidResult() {
         // When
-        TokenIssueDto dto = tokenIssuer.issue(Map.of("userId", 1234));
+        TokenIssueResponse dto = tokenIssuer.issue(Map.of("userId", 1234L));
 
         // Given
         Map<String, Object> payload = tokenValidator.validate(dto.token());
 
         // Then
-        assertEquals(1234, payload.get("userId"));
+        assertEquals(1234L, payload.get("userId"));
     }
 }

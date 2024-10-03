@@ -1,7 +1,7 @@
 package com.tsjeong.brokerage.controller;
 
 import com.tsjeong.brokerage.dto.ResponseDto;
-import com.tsjeong.brokerage.dto.token.TokenIssueDto;
+import com.tsjeong.brokerage.dto.token.TokenIssueResponse;
 import com.tsjeong.brokerage.dto.token.TokenIssueRequest;
 import com.tsjeong.brokerage.service.token.issue.TokenIssueService;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +21,7 @@ public class TokenController {
     private final TokenIssueService tokenIssueService;
 
     @PostMapping("/issue")
-    public ResponseEntity<ResponseDto<TokenIssueDto>> issueToken(
+    public ResponseEntity<ResponseDto<TokenIssueResponse>> issueToken(
             @Valid @RequestBody TokenIssueRequest requestBody
     ) {
         return ResponseEntity.ok(

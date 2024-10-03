@@ -1,7 +1,7 @@
 package com.tsjeong.brokerage.controller;
 
 import com.tsjeong.brokerage.dto.ResponseDto;
-import com.tsjeong.brokerage.dto.user.UserReadDto;
+import com.tsjeong.brokerage.dto.user.UserReadResponse;
 import com.tsjeong.brokerage.service.user.UserQueryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +17,7 @@ public class UserController {
 
 
     @GetMapping("/users")
-    public ResponseEntity<ResponseDto<List<UserReadDto>>> getAllUsers() {
+    public ResponseEntity<ResponseDto<List<UserReadResponse>>> getAllUsers() {
 
         return ResponseEntity.ok(
                 ResponseDto.success(

@@ -1,6 +1,6 @@
 package com.tsjeong.brokerage.service.token.issue;
 
-import com.tsjeong.brokerage.dto.token.TokenIssueDto;
+import com.tsjeong.brokerage.dto.token.TokenIssueResponse;
 import com.tsjeong.brokerage.exception.ErrorCode;
 import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -28,7 +28,7 @@ public class JjwtIssuer implements TokenIssuer {
     }
 
     @Override
-    public TokenIssueDto issue(Map<String, Object> claims) {
+    public TokenIssueResponse issue(Map<String, Object> claims) {
         if (Objects.isNull(claims) || claims.isEmpty()) {
             throw ErrorCode.INVALID_TOKEN_PROVIDE_PARAM.build("인증 수단은 적어도 하나의 payload 를 포함하고 있어야 합니다.");
         }
@@ -43,7 +43,7 @@ public class JjwtIssuer implements TokenIssuer {
                 .signWith(jwsSignKey)
                 .compact();
 
-        return new TokenIssueDto(
+        return new TokenIssueResponse(
                 token,
                 expiration,
                 expiration.getZone().getDisplayName(TextStyle.SHORT, Locale.ENGLISH)

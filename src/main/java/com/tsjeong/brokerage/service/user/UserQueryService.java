@@ -1,6 +1,6 @@
 package com.tsjeong.brokerage.service.user;
 
-import com.tsjeong.brokerage.dto.user.UserReadDto;
+import com.tsjeong.brokerage.dto.user.UserReadResponse;
 import com.tsjeong.brokerage.repsoitory.UsersRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,9 +14,9 @@ public class UserQueryService {
     private final UsersRepository usersRepository;
 
 
-    public List<UserReadDto> getAllUsers() {
+    public List<UserReadResponse> getAllUsers() {
         return usersRepository.findAll().stream()
-                .map(user -> new UserReadDto(user.getId(), user.getEmail(), user.getPassword()))
+                .map(user -> new UserReadResponse(user.getId(), user.getEmail(), user.getPassword()))
                 .toList();
     }
 
