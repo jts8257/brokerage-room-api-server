@@ -1,10 +1,7 @@
 package com.tsjeong.brokerage.entity.user;
 
 import com.tsjeong.brokerage.entity.room.Room;
-import lombok.AccessLevel;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -16,7 +13,9 @@ import java.util.Objects;
 @Entity
 @Table(name = "users")
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @EqualsAndHashCode(of = "id")
+@Builder
 public class Users {
 
     @Id
@@ -33,5 +32,15 @@ public class Users {
 
     public List<Room> getRooms() {
         return Objects.isNull(rooms) ? new ArrayList<>() : rooms;
+    }
+
+    @Override
+    public String toString() {
+        return "Users{" +
+                "id=" + id +
+                ", nickName='" + nickName + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                '}';
     }
 }

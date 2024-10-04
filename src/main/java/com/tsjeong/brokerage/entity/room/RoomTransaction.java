@@ -32,4 +32,7 @@ public class RoomTransaction extends TimeStampBase {
 
     private BigDecimal rentMonthly;
     private BigDecimal deposit;
+
+    @Transient
+    public static int MAX_PER_ROOM = 2;
 }

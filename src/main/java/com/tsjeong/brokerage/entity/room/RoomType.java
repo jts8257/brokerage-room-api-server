@@ -1,17 +1,16 @@
 package com.tsjeong.brokerage.entity.room;
 
-import lombok.AccessLevel;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Getter
 @Entity
 @Table(name = "room_types")
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
 @EqualsAndHashCode(of = "id")
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@Builder
 public class RoomType {
 
     @Id

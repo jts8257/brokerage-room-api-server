@@ -1,6 +1,5 @@
 package com.tsjeong.brokerage.dto.room.response;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tsjeong.brokerage.entity.room.Room;
 import com.tsjeong.brokerage.entity.room.RoomType;
 import lombok.Data;
@@ -27,28 +26,22 @@ public class RoomAbbrResponse {
 
     private LocalDate postedAt;
 
-    @JsonIgnore
-    public static RoomAbbrResponse of(Room room) {
-        RoomAbbrResponse dto = new RoomAbbrResponse();
-        dto.setId(Objects.isNull(room.getId()) ? null : room.getId().toString());
+    public RoomAbbrResponse (Room room) {
 
+        id = (Objects.isNull(room.getId()) ? null : room.getId().toString());
 
         RoomType roomType = room.getRoomType();
-        dto.setRoomTypeId(Objects.isNull(roomType) ? null : roomType.getId());
-        dto.setRoomTypeName(Objects.isNull(roomType) ? null : roomType.getName());
+        roomTypeId = (Objects.isNull(roomType) ? null : roomType.getId());
+        roomTypeName = (Objects.isNull(roomType) ? null : roomType.getName());
 
-        dto.setAddressJibun(room.getAddressJibun());
-        dto.setAddressRoad(room.getAddressRoad());
-        dto.setAddressDetail(room.getAddressDetail());
+        addressJibun = room.getAddressJibun();
+        addressRoad = room.getAddressRoad();
+        addressDetail = room.getAddressDetail();
 
-        dto.setTransactions(
-                room.getTransactions().stream()
+        transactions = room.getTransactions().stream()
                 .map(RoomTransactionResponse::of)
-                .toList()
-        );
+                .toList();
 
-        dto.setPostedAt(room.getCreatedDateKST());
-
-        return dto;
+        postedAt = room.getCreatedDateKST();
     }
 }

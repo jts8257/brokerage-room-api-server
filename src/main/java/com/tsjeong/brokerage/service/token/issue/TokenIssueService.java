@@ -3,7 +3,7 @@ package com.tsjeong.brokerage.service.token.issue;
 import com.tsjeong.brokerage.dto.token.TokenIssueResponse;
 import com.tsjeong.brokerage.entity.user.Users;
 import com.tsjeong.brokerage.exception.ErrorCode;
-import com.tsjeong.brokerage.repsoitory.UsersRepository;
+import com.tsjeong.brokerage.repsoitory.user.UsersRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

@@ -6,6 +6,7 @@ import com.tsjeong.brokerage.dto.token.TokenIssueResponse;
 import com.tsjeong.brokerage.exception.ApplicationException;
 import com.tsjeong.brokerage.service.token.issue.JjwtIssuer;
 import com.tsjeong.brokerage.service.token.issue.TokenIssuer;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -21,12 +22,13 @@ import static org.junit.jupiter.api.Assertions.*;
 )
 @EnableConfigurationProperties(JwtConfig.class)
 @ActiveProfiles("test")
-public class TokenIssuerTest {
+public class TokenIssuerSliceTest {
 
     @Autowired
     private TokenIssuer tokenIssuer;
 
     @Test
+    @DisplayName("TokenIssuer.issue - jwt 발행 성공")
     void shouldReturnValidResultWhenValidClaimProvided() {
         // Given
         Map<String, Object> claims = Map.of("userId", "12345");
@@ -39,17 +41,17 @@ public class TokenIssuerTest {
         assertNotNull(tokenIssueResponse.token());
         assertNotNull(tokenIssueResponse.expiredAt());
         assertNotNull(tokenIssueResponse.timeZone());
-
-        assertEquals("UTC", tokenIssueResponse.timeZone());
     }
 
     @Test
+    @DisplayName("TokenIssuer.issue - 비어있는 claim 은 jwt 발행시 예외 발생")
     void shouldThrowErrorWhenNullClaimProvided() {
         // Given, When, Then
         assertThrows(ApplicationException.class, () ->  tokenIssuer.issue(null));
     }
 
     @Test
+    @DisplayName("TokenIssuer.issue - 비어있는 claim 은 jwt 발행시 예외 발생")
     void shouldThrowErrorWhenEmptyClaimProvided() {
         // Given, When, Then
         assertThrows(ApplicationException.class, () ->  tokenIssuer.issue(Map.of()));

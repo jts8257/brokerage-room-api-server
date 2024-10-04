@@ -1,11 +1,11 @@
 plugins {
 	id 'java'
 	id 'org.springframework.boot' version '2.7.18'
-	id 'io.spring.dependency-management' version '1.1.4'
+	id 'io.spring.dependency-management' version '1.1.6'
 }
 
 group = 'com.tsjeong'
-version = '0.1.0'
+version = '0.2.0'
 
 java {
 	sourceCompatibility = '17'
@@ -30,8 +30,8 @@ dependencies {
 	implementation 'io.jsonwebtoken:jjwt-api:0.12.6'
 	implementation 'io.hypersistence:hypersistence-utils-hibernate-55:3.3.0'
 
-
 	compileOnly 'org.projectlombok:lombok'
+
 	runtimeOnly 'com.mysql:mysql-connector-j'
 	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.12.6'
 	runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.6'

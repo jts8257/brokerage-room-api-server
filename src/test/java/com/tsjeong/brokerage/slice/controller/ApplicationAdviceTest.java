@@ -3,6 +3,7 @@ package com.tsjeong.brokerage.slice.controller;
 import com.tsjeong.brokerage.exception.ApplicationAdvice;
 import com.tsjeong.brokerage.exception.ErrorCode;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -33,6 +34,7 @@ class ApplicationAdviceTest {
     }
 
     @Test
+    @DisplayName("DummyController - Invalid Token Exception")
     void shouldReturnUnauthorizedWhenInvalidTokenExceptionThrown() throws Exception {
         mockMvc.perform(get("/dummy/token-invalid"))
                 .andExpect(status().isUnauthorized())
@@ -40,6 +42,7 @@ class ApplicationAdviceTest {
     }
 
     @Test
+    @DisplayName("DummyController - Authorization Header Missing Exception")
     void shouldReturnUnAuthorizedWhenAuthorizationHeaderMissing() throws Exception {
         mockMvc.perform(get("/dummy/authorization-missing"))
                 .andExpect(status().isUnauthorized())
@@ -47,6 +50,7 @@ class ApplicationAdviceTest {
     }
 
     @Test
+    @DisplayName("DummyController - Non Authorization Header Missing Exception")
     void shouldReturnBadRequestWhenAuthorizationHeaderMissing() throws Exception {
         mockMvc.perform(get("/dummy/header-missing"))
                 .andExpect(status().isBadRequest())
@@ -54,6 +58,7 @@ class ApplicationAdviceTest {
     }
 
     @Test
+    @DisplayName("DummyController - Request Parameter Type Mismatch Exception")
     void shouldReturnBadRequestWhenParameterMismatch() throws Exception {
         mockMvc.perform(get("/dummy/param-mismatch")
                         .param("number", "invalid")) // 파라미터에 잘못된 값 전달

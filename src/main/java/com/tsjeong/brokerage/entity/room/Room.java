@@ -37,14 +37,27 @@ public class Room extends TimeStampBase {
     private String addressRoad;
     private String addressDetail;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH},
+            orphanRemoval = true,
+            fetch = FetchType.LAZY
+    )
     @JoinColumn(name = "detail_id")
     private RoomDetail detail;
 
-    @OneToMany(mappedBy = "room", fetch = FetchType.LAZY)
+    @OneToMany(
+            mappedBy = "room",
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH},
+            orphanRemoval = true,
+            fetch = FetchType.LAZY
+    )
     private List<RoomTransaction> transactions;
 
     public List<RoomTransaction> getTransactions() {
-        return Objects.isNull(transactions) ? new ArrayList<>() : transactions;
+        if (Objects.isNull(transactions)) {
+            this.transactions = new ArrayList<>();
+        }
+        return transactions;
     }
+
 }

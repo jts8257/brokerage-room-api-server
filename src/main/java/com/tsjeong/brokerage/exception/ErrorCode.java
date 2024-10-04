@@ -27,7 +27,7 @@ public enum ErrorCode {
     BAD_PARAMETER(HttpStatus.BAD_REQUEST, "BR-0002", "the required http query param is missing"),
     BAD_BODY(HttpStatus.BAD_REQUEST, "BR-0003", "the required http body is missing"),
 
-    BAD_CONSTRAINT_BODY_FILED(HttpStatus.BAD_REQUEST, "BR-0004", "the request body filed value doesn't fit required constraint"),
+    BAD_CONSTRAINT_BODY_FIELD(HttpStatus.BAD_REQUEST, "BR-0004", "the request body filed value doesn't fit required constraint"),
     BAD_CONSTRAINT_OTHER(HttpStatus.BAD_REQUEST, "BR-0005", "the request doesn't fit required constraint"),
     BAD_METHOD(HttpStatus.METHOD_NOT_ALLOWED, "BR-0006", "the method not allowed"),
     BAD_PARAMETER_TYPE(HttpStatus.BAD_REQUEST, "BR-0007", "the request parameter violate type constraint"),

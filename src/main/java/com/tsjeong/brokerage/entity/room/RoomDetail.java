@@ -26,4 +26,8 @@ public class RoomDetail extends TimeStampBase {
 
     @Column(columnDefinition = "TEXT")
     private String description;
+
+    public void update(String description) {
+        this.description = description;
+    }
 }

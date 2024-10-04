@@ -74,7 +74,7 @@ public class ApplicationAdvice {
                     .toList();
         }
 
-        ApplicationException ape = filedError ? BAD_CONSTRAINT_BODY_FILED.build(reasons.toString()) : BAD_CONSTRAINT_OTHER.build(reasons.toString());
+        ApplicationException ape = filedError ? BAD_CONSTRAINT_BODY_FIELD.build(reasons.toString()) : BAD_CONSTRAINT_OTHER.build(reasons.toString());
         ExceptionLoggingHelper.log(e, request, ape.getHttpStatus());
 
         return ResponseEntity

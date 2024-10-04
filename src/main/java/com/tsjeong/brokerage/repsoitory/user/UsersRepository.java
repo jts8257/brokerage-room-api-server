@@ -1,4 +1,4 @@
-package com.tsjeong.brokerage.repsoitory;
+package com.tsjeong.brokerage.repsoitory.user;
 
 
 import com.tsjeong.brokerage.entity.user.Users;
