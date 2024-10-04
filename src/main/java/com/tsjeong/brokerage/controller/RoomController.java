@@ -9,6 +9,7 @@ import com.tsjeong.brokerage.dto.room.response.RoomAbbrResponse;
 import com.tsjeong.brokerage.dto.room.response.RoomDetailResponse;
 import com.tsjeong.brokerage.entity.room.Room;
 import com.tsjeong.brokerage.service.room.command.RoomCreateService;
+import com.tsjeong.brokerage.service.room.query.RoomQueryDetailService;
 import com.tsjeong.brokerage.service.room.query.enums.RoomQueryMode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -24,6 +25,7 @@ import java.util.List;
 @RequestMapping("/rooms")
 public class RoomController {
     private final RoomCreateService roomCreateService;
+    private final RoomQueryDetailService roomQueryDetailService;
 
     @PostMapping
     @TokenValidate
@@ -45,6 +47,7 @@ public class RoomController {
         RoomDetailResponse response = new RoomDetailResponse(room);
         return ResponseEntity.status(HttpStatus.CREATED).body(ResponseDto.success(response));
     }
+
     @GetMapping("/{roomId}")
     @TokenValidate
     public ResponseEntity<ResponseDto<RoomDetailResponse>> getDetailRoom(
@@ -52,7 +55,9 @@ public class RoomController {
             @RequestHeader(HttpHeaders.AUTHORIZATION) String authorization,
             @PathVariable Long roomId
     ) {
-        return ResponseEntity.notFound().build();
+        RoomDetailResponse response = roomQueryDetailService.getRoomForDetailQuery(roomId);
+
+        return ResponseEntity.ok(ResponseDto.success(response));
     }
 
     @GetMapping

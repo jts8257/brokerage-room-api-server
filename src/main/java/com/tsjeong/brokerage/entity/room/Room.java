@@ -4,6 +4,7 @@ import com.tsjeong.brokerage.entity.TimeStampBase;
 import com.tsjeong.brokerage.entity.user.Users;
 
 import lombok.*;
+import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -25,11 +26,11 @@ public class Room extends TimeStampBase {
     @GenericGenerator(name = "tsid", strategy = "io.hypersistence.utils.hibernate.id.TsidGenerator")
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private Users user;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "type_id")
     private RoomType roomType;
 
@@ -44,6 +45,8 @@ public class Room extends TimeStampBase {
     )
     @JoinColumn(name = "detail_id")
     private RoomDetail detail;
+    //Todo Hibernate 는 JPA spec 을 Proxy 객체를 통해 구현하기 때문에 toOne 조건으로 매핑됐을때 쿼리가 하나 추가로 발생한다
+
 
     @OneToMany(
             mappedBy = "room",
@@ -51,6 +54,7 @@ public class Room extends TimeStampBase {
             orphanRemoval = true,
             fetch = FetchType.LAZY
     )
+    @BatchSize(size = 2)
     private List<RoomTransaction> transactions;
 
     public List<RoomTransaction> getTransactions() {
@@ -59,5 +63,4 @@ public class Room extends TimeStampBase {
         }
         return transactions;
     }
-
 }
