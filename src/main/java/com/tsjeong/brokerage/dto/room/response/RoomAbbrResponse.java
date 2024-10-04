@@ -5,8 +5,7 @@ import com.tsjeong.brokerage.entity.room.RoomType;
 import lombok.Data;
 
 import javax.validation.constraints.Size;
-import java.time.LocalDate;
-import java.util.ArrayList;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Objects;
 
@@ -22,9 +21,14 @@ public class RoomAbbrResponse {
     private String addressDetail;
 
     @Size(max = 2)
-    private List<RoomTransactionResponse> transactions = new ArrayList<>();
+    private List<RoomTransactionResponse> transactions;
 
-    private LocalDate postedAt;
+    private ZonedDateTime postedAt;
+    private ZonedDateTime updatedAt;
+
+    private String userName;
+
+    // Todo editable, deletable 필드가 추가되어야 하는건 아닐까?
 
     public RoomAbbrResponse (Room room) {
 
@@ -42,6 +46,8 @@ public class RoomAbbrResponse {
                 .map(RoomTransactionResponse::of)
                 .toList();
 
-        postedAt = room.getCreatedDateKST();
+        postedAt = room.getCreatedAtKST();
+        updatedAt = room.getUpdatedAtKST();
+        userName = room.getUser() == null ? null : room.getUser().getNickName();
     }
 }

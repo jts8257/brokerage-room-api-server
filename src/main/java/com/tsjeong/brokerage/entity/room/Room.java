@@ -16,7 +16,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "rooms")
 @Builder
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @EqualsAndHashCode(of = "id", callSuper = false)
 public class Room extends TimeStampBase {
@@ -45,8 +45,6 @@ public class Room extends TimeStampBase {
     )
     @JoinColumn(name = "detail_id")
     private RoomDetail detail;
-    //Todo Hibernate 는 JPA spec 을 Proxy 객체를 통해 구현하기 때문에 toOne 조건으로 매핑됐을때 쿼리가 하나 추가로 발생한다
-
 
     @OneToMany(
             mappedBy = "room",
@@ -54,7 +52,7 @@ public class Room extends TimeStampBase {
             orphanRemoval = true,
             fetch = FetchType.LAZY
     )
-    @BatchSize(size = 2)
+    @BatchSize(size = 100)
     private List<RoomTransaction> transactions;
 
     public List<RoomTransaction> getTransactions() {

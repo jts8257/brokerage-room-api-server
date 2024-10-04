@@ -7,15 +7,15 @@ ON DUPLICATE KEY UPDATE
     email = VALUES(email),
     password = VALUES(password);
 
-INSERT INTO transaction_types (name, is_deposit_only) VALUES
-    ('전세', 'Y'),
-    ('월세', 'N')
+INSERT INTO transaction_types (id, name, is_deposit_only) VALUES
+    (1, '전세', 'Y'),
+    (2, '월세', 'N')
 ON DUPLICATE KEY UPDATE
     is_deposit_only = VALUES(is_deposit_only);
 
-INSERT INTO room_types (name) VALUES
-    ('원룸'),
-    ('투룸'),
-    ('쓰리룸')
+INSERT INTO room_types (id, name) VALUES
+    (1, '원룸'),
+    (2, '투룸'),
+    (3, '쓰리룸')
 ON DUPLICATE KEY UPDATE
     name = VALUES(name);

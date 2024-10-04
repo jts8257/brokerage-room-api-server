@@ -8,7 +8,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "room_types")
 @EqualsAndHashCode(of = "id")
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder
 public class RoomType {

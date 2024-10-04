@@ -12,7 +12,7 @@ import java.util.Objects;
 @Getter
 @Entity
 @Table(name = "users")
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @EqualsAndHashCode(of = "id")
 @Builder
@@ -32,15 +32,5 @@ public class Users {
 
     public List<Room> getRooms() {
         return Objects.isNull(rooms) ? new ArrayList<>() : rooms;
-    }
-
-    @Override
-    public String toString() {
-        return "Users{" +
-                "id=" + id +
-                ", nickName='" + nickName + '\'' +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                '}';
     }
 }

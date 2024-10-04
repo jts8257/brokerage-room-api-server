@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 @Entity
 @Table(name = "room_transactions")
 @Builder
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @EqualsAndHashCode(of = "id", callSuper = false)
 public class RoomTransaction extends TimeStampBase {

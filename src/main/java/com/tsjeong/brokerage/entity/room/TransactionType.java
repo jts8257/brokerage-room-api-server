@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "transaction_types")
 @EqualsAndHashCode(of = "id")
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder
 public class TransactionType {

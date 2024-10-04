@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "room_details")
 @Builder
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @EqualsAndHashCode(of = "id", callSuper = false)
 public class RoomDetail extends TimeStampBase {
