@@ -21,4 +21,11 @@ public class RoomTransactionCreateRequest {
     @DecimalMax(value = "100000000000000000.00", inclusive = false)
     private BigDecimal deposit;
 
+    public void setRentMonthly(BigDecimal rentMonthly) {
+        this.rentMonthly = (rentMonthly != null && rentMonthly.signum() == 0) ? null : rentMonthly;
+    }
+
+    public void setDeposit(BigDecimal deposit) {
+        this.deposit = (deposit != null && deposit.signum() == 0) ? null : deposit;
+    }
 }

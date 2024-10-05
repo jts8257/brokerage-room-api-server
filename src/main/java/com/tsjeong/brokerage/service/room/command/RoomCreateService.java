@@ -28,8 +28,8 @@ public class RoomCreateService {
 
     @Transactional
     public Room createRoom(
-            Long userId,
-            Integer roomTypeId,
+            long userId,
+            int roomTypeId,
             String addressJibun,
             String addressRoad,
             String addressDetail,

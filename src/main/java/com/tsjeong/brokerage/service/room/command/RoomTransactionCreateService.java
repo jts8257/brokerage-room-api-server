@@ -9,7 +9,10 @@ import com.tsjeong.brokerage.repsoitory.room.RoomTransactionRepository;
 import com.tsjeong.brokerage.service.category.TransactionTypeReadService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -20,6 +23,7 @@ public class RoomTransactionCreateService {
     private final TransactionTypeReadService transactionTypeReadService;
     private final RoomTransactionRepository roomTransactionRepository;
 
+    @Transactional(propagation = Propagation.REQUIRED)
     public List<RoomTransaction> createRoomTransactionBy(Room room, List<RoomTransactionCreateRequest> transactions) {
         return roomTransactionRepository.saveAll(
                 transactions.stream()
@@ -44,7 +48,8 @@ public class RoomTransactionCreateService {
         }
 
         RoomTransactionCreateRequest dto = dtoList.get(0);
-        validateTransactionPriceCondition(type, dto);
+
+        TransactionPriceConditionValidator.validate(type, dto.getRentMonthly(), dto.getDeposit());
 
         return RoomTransaction.builder()
                 .transactionType(type)
@@ -54,24 +59,4 @@ public class RoomTransactionCreateService {
                 .build();
     }
 
-    private void validateTransactionPriceCondition(TransactionType type, RoomTransactionCreateRequest dto) {
-        if (Objects.isNull(dto.getRentMonthly()) && Objects.isNull(dto.getDeposit())) {
-            throw ErrorCode.ENTITY_CONFLICT
-                    .build("거래유형 '%s'에 대한 임대료 와 보증금이 모두 누락되었습니다.".formatted(type.getName()));
-        }
-
-        if (!type.getIsDepositOnly() && (dto.getRentMonthly() == null || dto.getRentMonthly().signum() == 0)) {
-            throw ErrorCode.ENTITY_CONFLICT.build("거래유형 '%s'에 대한 임대료가 누락되었습니다.".formatted(type.getName()));
-        }
-
-        if (type.getIsDepositOnly()) {
-            if (dto.getDeposit() == null || dto.getDeposit().signum() == 0) {
-                throw ErrorCode.ENTITY_CONFLICT.build("거래유형 '%s'에 대한 보증금이 누락되었습니다.".formatted(type.getName()));
-            }
-            if (dto.getRentMonthly() != null) {
-                throw ErrorCode.ENTITY_CONFLICT.build("거래유형 '%s'에 대한 임대료를 지정할 수 없지만 임대료 '%s'를 부여하려고 합니다."
-                                .formatted(type.getName(), dto.getRentMonthly()));
-            }
-        }
-    }
 }

@@ -16,4 +16,21 @@ public interface RoomRepository extends JpaRepository<Room, Long>, RoomPaginatio
     WHERE r.id = :roomId
     """)
     Optional<Room> findRoomByIdFetchDetail(Long roomId);
+
+    @Query("""
+    SELECT r FROM Room r
+    INNER JOIN FETCH r.user
+    INNER JOIN FETCH r.roomType
+    INNER JOIN FETCH r.transactions
+    LEFT JOIN FETCH r.detail
+    WHERE r.id = :roomId
+    """)
+    Optional<Room> findRoomForUpdateUsingId(Long roomId);
+
+    @Query("""
+    SELECT r FROM Room r
+    INNER JOIN FETCH r.user
+    WHERE r.id = :roomId
+    """)
+    Optional<Room> findRoomByIdFetchUser(Long roomId);
 }

@@ -7,8 +7,9 @@ import com.tsjeong.brokerage.dto.room.request.RoomCreateRequest;
 import com.tsjeong.brokerage.dto.room.request.RoomUpdateRequest;
 import com.tsjeong.brokerage.dto.room.response.RoomAbbrResponse;
 import com.tsjeong.brokerage.dto.room.response.RoomDetailResponse;
-import com.tsjeong.brokerage.entity.room.Room;
 import com.tsjeong.brokerage.service.room.command.RoomCreateService;
+import com.tsjeong.brokerage.service.room.command.RoomDeleteService;
+import com.tsjeong.brokerage.service.room.command.RoomUpdateService;
 import com.tsjeong.brokerage.service.room.query.RoomQueryDetailService;
 import com.tsjeong.brokerage.service.room.query.RoomQueryPageService;
 import com.tsjeong.brokerage.service.room.query.enums.RoomQueryMode;
@@ -29,8 +30,12 @@ import java.util.List;
 @RequestMapping("/rooms")
 public class RoomController {
     private final RoomCreateService roomCreateService;
+
     private final RoomQueryDetailService roomQueryDetailService;
     private final RoomQueryPageService roomQueryPageService;
+
+    private final RoomUpdateService roomUpdateService;
+    private final RoomDeleteService roomDeleteService;
 
     @PostMapping
     @TokenValidate
@@ -39,7 +44,7 @@ public class RoomController {
             @RequestHeader(HttpHeaders.AUTHORIZATION) String authorization,
             @RequestBody @Valid RoomCreateRequest requestBody
     ) {
-        Room room = roomCreateService.createRoom(
+        var room = roomCreateService.createRoom(
                 actionUserId,
                 requestBody.getRoomTypeId(),
                 requestBody.getAddressJibun(),
@@ -49,7 +54,7 @@ public class RoomController {
                 requestBody.getTransactions()
         );
 
-        RoomDetailResponse response = new RoomDetailResponse(room);
+        var response = new RoomDetailResponse(room);
         return ResponseEntity.status(HttpStatus.CREATED).body(ResponseDto.success(response));
     }
 
@@ -60,7 +65,7 @@ public class RoomController {
             @RequestHeader(HttpHeaders.AUTHORIZATION) String authorization,
             @PathVariable Long roomId
     ) {
-        RoomDetailResponse response = roomQueryDetailService.getRoomForDetailQuery(roomId);
+        var response = roomQueryDetailService.getRoomForDetailQuery(roomId);
 
         return ResponseEntity.ok(ResponseDto.success(response));
     }
@@ -81,7 +86,7 @@ public class RoomController {
             @RequestParam(required = false) BigDecimal maxDeposit,
             @RequestParam RoomQueryMode mode
     ) {
-        List<RoomAbbrResponse> responses = roomQueryPageService.getRoomsPageBy(
+        var responses = roomQueryPageService.getRoomsPageBy(
                 actionUserId, lastRoomId, pageSize, roomTypeIds, transactionTypeIds, minRent, maxRent, minDeposit, maxDeposit, mode);
 
         return ResponseEntity.ok(ResponseDto.success(responses));
@@ -95,16 +100,30 @@ public class RoomController {
             @PathVariable Long roomId,
             @RequestBody RoomUpdateRequest requestBody
     ) {
-        return ResponseEntity.notFound().build();
+
+        var room = roomUpdateService.roomUpdate(
+                actionUserId,
+                roomId,
+                requestBody.getRoomTypeId(),
+                requestBody.getAddressJibun(),
+                requestBody.getAddressRoad(),
+                requestBody.getAddressDetail(),
+                requestBody.getDescription(),
+                requestBody.getTransactions());
+        var response = new RoomDetailResponse(room);
+
+        return ResponseEntity.ok(ResponseDto.success(response));
     }
 
     @DeleteMapping("/{roomId}")
     @TokenValidate
-    public ResponseEntity<ResponseDto<RoomDetailResponse>> deleteRoom(
+    public ResponseEntity<ResponseDto<Boolean>> deleteRoom(
             @UserIdInject Long actionUserId,
             @RequestHeader(HttpHeaders.AUTHORIZATION) String authorization,
             @PathVariable Long roomId
     ) {
-        return ResponseEntity.notFound().build();
+
+        roomDeleteService.deleteRoom(actionUserId, roomId);
+        return ResponseEntity.ok(ResponseDto.success(true));
     }
 }

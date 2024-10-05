@@ -30,4 +30,8 @@ public class RoomDetail extends TimeStampBase {
     public void update(String description) {
         this.description = description;
     }
+
+    public void makeOrphan() {
+        this.room = null;
+    }
 }

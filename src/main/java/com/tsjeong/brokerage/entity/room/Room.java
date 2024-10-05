@@ -3,6 +3,7 @@ package com.tsjeong.brokerage.entity.room;
 import com.tsjeong.brokerage.entity.TimeStampBase;
 import com.tsjeong.brokerage.entity.user.Users;
 
+import com.tsjeong.brokerage.service.util.StringValidator;
 import lombok.*;
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.GenericGenerator;
@@ -39,7 +40,7 @@ public class Room extends TimeStampBase {
     private String addressDetail;
 
     @OneToOne(
-            cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH},
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH,CascadeType.REMOVE},
             orphanRemoval = true,
             fetch = FetchType.LAZY
     )
@@ -48,7 +49,7 @@ public class Room extends TimeStampBase {
 
     @OneToMany(
             mappedBy = "room",
-            cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH},
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.REMOVE},
             orphanRemoval = true,
             fetch = FetchType.LAZY
     )
@@ -60,5 +61,38 @@ public class Room extends TimeStampBase {
             this.transactions = new ArrayList<>();
         }
         return transactions;
+    }
+
+    public void update(
+            RoomType roomType,
+            String addressJibun,
+            String addressRoad,
+            String addressDetail
+    ) {
+        if (!Objects.isNull(roomType)) {
+            this.roomType = roomType;
+        }
+
+        this.addressJibun = addressJibun;
+        this.addressRoad = addressRoad;
+        this.addressDetail = addressDetail;
+    }
+
+    public void updateDetail(String description) {
+        if (!StringValidator.isEmptyOrNull(description) && detail != null) {
+            detail.update(description);
+
+        } else if (!StringValidator.isEmptyOrNull(description) && detail == null) {
+            detail = RoomDetail.builder()
+                    .description(description)
+                    .build();
+        }
+    }
+
+    public void deleteDetail() {
+        if (detail != null) {
+            detail.makeOrphan();
+            this.detail = null;
+        }
     }
 }
