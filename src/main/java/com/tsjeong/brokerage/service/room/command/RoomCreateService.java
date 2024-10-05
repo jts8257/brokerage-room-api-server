@@ -7,7 +7,7 @@ import com.tsjeong.brokerage.entity.room.RoomType;
 import com.tsjeong.brokerage.entity.user.Users;
 import com.tsjeong.brokerage.exception.ErrorCode;
 import com.tsjeong.brokerage.repsoitory.room.RoomRepository;
-import com.tsjeong.brokerage.service.room.query.RoomTypeReadService;
+import com.tsjeong.brokerage.service.category.RoomTypeReadService;
 import com.tsjeong.brokerage.service.user.UserReadService;
 import com.tsjeong.brokerage.service.util.StringValidator;
 import lombok.RequiredArgsConstructor;

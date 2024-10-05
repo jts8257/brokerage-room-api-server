@@ -6,7 +6,7 @@ import com.tsjeong.brokerage.entity.room.RoomTransaction;
 import com.tsjeong.brokerage.entity.room.TransactionType;
 import com.tsjeong.brokerage.exception.ErrorCode;
 import com.tsjeong.brokerage.repsoitory.room.RoomTransactionRepository;
-import com.tsjeong.brokerage.service.room.query.TransactionTypeReadService;
+import com.tsjeong.brokerage.service.category.TransactionTypeReadService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

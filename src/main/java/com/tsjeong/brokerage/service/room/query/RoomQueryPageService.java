@@ -2,15 +2,12 @@ package com.tsjeong.brokerage.service.room.query;
 
 import com.tsjeong.brokerage.dto.room.response.RoomAbbrResponse;
 import com.tsjeong.brokerage.service.room.query.enums.RoomQueryMode;
-import com.tsjeong.brokerage.service.room.query.enums.RoomQueryRoomType;
-import com.tsjeong.brokerage.service.room.query.enums.RoomQueryTransactionType;
 import com.tsjeong.brokerage.service.room.query.strategy.RoomPaginationStrategy;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -25,8 +22,8 @@ public class RoomQueryPageService {
             long actionUserId,
             long lastRoomId,
             int pageSize,
-            List<RoomQueryRoomType> roomTypes,
-            List<RoomQueryTransactionType> transactionTypes,
+            List<Integer> roomTypeIds,
+            List<Integer> transactionTypeIds,
             BigDecimal minRent,
             BigDecimal maxRent,
             BigDecimal minDeposit,
@@ -38,11 +35,6 @@ public class RoomQueryPageService {
             case ALL -> allRoomPaginationStrategy;
             case MY -> myRoomPaginationStrategy;
         };
-
-        List<Integer> roomTypeIds = roomTypes == null ? null : roomTypes.stream().map(RoomQueryRoomType::getId).toList();
-
-        List<Integer> transactionTypeIds = transactionTypes == null ? null :
-                transactionTypes.stream().map(RoomQueryTransactionType::getId).toList();
 
         return strategy.execute(
                 actionUserId,

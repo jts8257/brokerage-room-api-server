@@ -2,7 +2,6 @@ package com.tsjeong.brokerage.service.room.query.strategy;
 
 import com.tsjeong.brokerage.dto.room.response.RoomAbbrResponse;
 import com.tsjeong.brokerage.repsoitory.room.RoomRepository;
-import com.tsjeong.brokerage.service.user.UserReadService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

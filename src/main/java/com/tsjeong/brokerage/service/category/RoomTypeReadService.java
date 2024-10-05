@@ -1,4 +1,4 @@
-package com.tsjeong.brokerage.service.room.query;
+package com.tsjeong.brokerage.service.category;
 
 import com.tsjeong.brokerage.entity.room.RoomType;
 import com.tsjeong.brokerage.exception.ErrorCode;
@@ -6,6 +6,7 @@ import com.tsjeong.brokerage.repsoitory.room.RoomTypeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Objects;
 
 @Service
@@ -29,5 +30,9 @@ public class RoomTypeReadService {
 
         return roomTypeRepository.findById(roomTypeId).orElseThrow(
                 () -> ErrorCode.ENTITY_NOT_FOUND.build("'id:%d'인 방 유형을 찾을 수 없습니다.".formatted(roomTypeId)));
+    }
+
+    public List<RoomType> getAllRoomTypes() {
+        return roomTypeRepository.findAll();
     }
 }

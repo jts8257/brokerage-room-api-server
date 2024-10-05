@@ -14,9 +14,6 @@ public class RoomQueryDetailService {
 
     private final RoomRepository roomRepository;
 
-
-    // Todo 트랜잭션이 필요한가?
-
     @Transactional(readOnly = true)
     public RoomDetailResponse getRoomForDetailQuery(
             Long roomId
