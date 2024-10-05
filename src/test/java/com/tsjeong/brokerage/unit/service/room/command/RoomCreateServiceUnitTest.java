@@ -7,7 +7,7 @@ import com.tsjeong.brokerage.exception.ApplicationException;
 import com.tsjeong.brokerage.repsoitory.room.RoomRepository;
 import com.tsjeong.brokerage.service.room.command.RoomCreateService;
 import com.tsjeong.brokerage.service.room.command.RoomTransactionCreateService;
-import com.tsjeong.brokerage.service.room.query.RoomTypeReadService;
+import com.tsjeong.brokerage.service.category.RoomTypeReadService;
 import com.tsjeong.brokerage.service.user.UserReadService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

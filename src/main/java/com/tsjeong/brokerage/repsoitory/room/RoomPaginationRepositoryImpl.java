@@ -56,6 +56,9 @@ public class RoomPaginationRepositoryImpl implements RoomPaginationRepository {
         }
         if (maxRent != null) {
             builder.and(roomTransaction.rentMonthly.loe(maxRent));
+            if (minRent == null) {
+                builder.or(roomTransaction.rentMonthly.isNull());
+            }
         }
 
         if (minDeposit != null) {
@@ -69,8 +72,8 @@ public class RoomPaginationRepositoryImpl implements RoomPaginationRepository {
         return queryFactory.selectFrom(room)
                 .innerJoin(room.roomType).fetchJoin()
                 .innerJoin(room.user).fetchJoin()
-                .leftJoin(room.transactions, roomTransaction).fetchJoin()
-                .leftJoin(roomTransaction.transactionType).fetchJoin()
+                .innerJoin(room.transactions, roomTransaction).fetchJoin()
+                .innerJoin(roomTransaction.transactionType).fetchJoin()
                 .where(builder)
                 .orderBy(room.id.desc())
                 .limit(pageSize)
@@ -96,7 +99,6 @@ public class RoomPaginationRepositoryImpl implements RoomPaginationRepository {
         BooleanBuilder builder = new BooleanBuilder();
 
         builder.and(room.id.lt(lastRoomId));
-        builder.and(room.user.id.eq(userId)); // 본인 기준
 
         if (roomTypeIds != null && !roomTypeIds.isEmpty()) {
             builder.and(room.roomType.id.in(roomTypeIds));
@@ -109,8 +111,12 @@ public class RoomPaginationRepositoryImpl implements RoomPaginationRepository {
         if (minRent != null) {
             builder.and(roomTransaction.rentMonthly.goe(minRent));
         }
+
         if (maxRent != null) {
             builder.and(roomTransaction.rentMonthly.loe(maxRent));
+            if (minRent == null) {
+                builder.or(roomTransaction.rentMonthly.isNull());
+            }
         }
 
         if (minDeposit != null) {
@@ -122,9 +128,9 @@ public class RoomPaginationRepositoryImpl implements RoomPaginationRepository {
 
         return queryFactory.selectFrom(room)
                 .innerJoin(room.roomType).fetchJoin()
-                .innerJoin(room.user).fetchJoin()
-                .leftJoin(room.transactions, roomTransaction).fetchJoin()
-                .leftJoin(roomTransaction.transactionType).fetchJoin()
+                .innerJoin(room.user).on(room.user.id.eq(userId))
+                .innerJoin(room.transactions, roomTransaction).fetchJoin()
+                .innerJoin(roomTransaction.transactionType).fetchJoin()
                 .where(builder)
                 .orderBy(room.id.desc())
                 .limit(pageSize)

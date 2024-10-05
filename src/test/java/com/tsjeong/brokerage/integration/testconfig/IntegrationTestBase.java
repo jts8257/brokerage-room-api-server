@@ -1,4 +1,4 @@
-package com.tsjeong.brokerage.integration;
+package com.tsjeong.brokerage.integration.testconfig;
 
 import com.tsjeong.brokerage.entity.room.RoomType;
 import com.tsjeong.brokerage.entity.room.TransactionType;
@@ -33,19 +33,26 @@ public abstract class IntegrationTestBase {
     protected int rentId;
     protected int oneRoomId;
     protected int twoRoomId;
-    protected int threeRoomId;
+
+    protected Users user1;
+    protected Users user2;
+    protected TransactionType jeonse;
+    protected TransactionType rent;
+    protected RoomType oneRoom;
+    protected RoomType twoRoom;
+
     @BeforeEach
-    void setUp() {
+    protected void setUp() {
         // 테스트 데이터가 이미 존재하지 않는 경우에만 삽입
         if (usersRepository.count() == 0) {
-            Users user1 = usersRepository.save(Users.builder()
+            user1 = usersRepository.save(Users.builder()
                     .nickName("홍길동")
                     .email("hong@naver.com")
                     .password("1234")
                     .build());
             user1Id = user1.getId();
 
-            Users user2 = usersRepository.save(Users.builder()
+            user2 = usersRepository.save(Users.builder()
                     .nickName("김철수")
                     .email("kim@naver.com")
                     .password("1234")
@@ -54,31 +61,27 @@ public abstract class IntegrationTestBase {
         }
 
         if (transactionTypeRepository.count() == 0) {
-            TransactionType jeonse = transactionTypeRepository.save(
+            jeonse = transactionTypeRepository.save(
                     TransactionType.builder()
                     .name("전세")
                     .isDepositOnly(true)
                     .build());
             jeonseId = jeonse.getId();
 
-            TransactionType monthlyRent = transactionTypeRepository.save(
+            rent = transactionTypeRepository.save(
                     TransactionType.builder()
                     .name("월세")
                     .isDepositOnly(false)
                     .build());
-            rentId = monthlyRent.getId();
-
+            rentId = rent.getId();
         }
 
         if (roomTypeRepository.count() == 0) {
-
-            RoomType oneRoom = roomTypeRepository.save(RoomType.builder().name("원룸").build());
-            RoomType twoRoom = roomTypeRepository.save(RoomType.builder().name("투룸").build());
-            RoomType threeRoom = roomTypeRepository.save(RoomType.builder().name("쓰리룸").build());
+            oneRoom = roomTypeRepository.save(RoomType.builder().name("원룸").build());
+            twoRoom = roomTypeRepository.save(RoomType.builder().name("투룸").build());
 
             oneRoomId = oneRoom.getId();
             twoRoomId = twoRoom.getId();
-            threeRoomId = threeRoom.getId();
         }
     }
 }

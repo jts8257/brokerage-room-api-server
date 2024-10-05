@@ -4,7 +4,7 @@ import com.tsjeong.brokerage.dto.room.request.RoomTransactionCreateRequest;
 import com.tsjeong.brokerage.entity.room.Room;
 import com.tsjeong.brokerage.entity.room.RoomTransaction;
 import com.tsjeong.brokerage.entity.user.Users;
-import com.tsjeong.brokerage.integration.IntegrationTestBase;
+import com.tsjeong.brokerage.integration.testconfig.IntegrationTestBase;
 import com.tsjeong.brokerage.repsoitory.room.RoomRepository;
 import com.tsjeong.brokerage.repsoitory.room.RoomTransactionRepository;
 import com.tsjeong.brokerage.service.room.command.RoomCreateService;

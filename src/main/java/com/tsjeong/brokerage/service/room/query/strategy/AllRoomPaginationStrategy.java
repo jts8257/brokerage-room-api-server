@@ -1,6 +1,6 @@
 package com.tsjeong.brokerage.service.room.query.strategy;
 
-import com.tsjeong.brokerage.dto.room.response.RoomAbbrResponse;
+import com.tsjeong.brokerage.entity.room.Room;
 import com.tsjeong.brokerage.repsoitory.room.RoomRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,7 +15,7 @@ public class AllRoomPaginationStrategy implements RoomPaginationStrategy {
     private final RoomRepository roomRepository;
 
     @Override
-    public List<RoomAbbrResponse> execute(
+    public List<Room> execute(
             long actionUserId,
             long lastRoomId,
             int pageSize,
@@ -28,9 +28,7 @@ public class AllRoomPaginationStrategy implements RoomPaginationStrategy {
     ) {
 
          return roomRepository.findAllRoomBy(lastRoomId, pageSize,
-                        roomTypeIds, transactionTypeIds, minRent, maxRent, minDeposit, maxDeposit).stream()
-                .map(RoomAbbrResponse::new)
-                .toList();
+                        roomTypeIds, transactionTypeIds, minRent, maxRent, minDeposit, maxDeposit);
 
     }
 }
