@@ -22,7 +22,6 @@ public class UserController {
     @GetMapping("/users")
     public ResponseEntity<ResponseDto<List<UserReadResponse>>> getAllUsers() {
         List<UserReadResponse> usersList = userReadService.getAllUsers();
-        log.info(usersList.toString());
         return ResponseEntity.ok(
                 ResponseDto.success(
                         usersList

@@ -52,15 +52,18 @@ public class TokenValidateAspect {
 
         Map<String, Object> payload = tokenValidateService.validateToken(token);
 
-        Method method = MethodFinder.findMethodBy(joinPoint);
         Object[] args = joinPoint.getArgs();
-        Parameter[] parameters = method.getParameters();
 
-        Integer argIndex = ArgIndexFinder.findIndexByAnnotation(parameters, UserIdInject.class);
-        if (argIndex == null) {
-            throw new IllegalArgumentException("토큰 payload 를 받을 파라미터가 누락되었습니다.");
+        if (tokenValidate.isUserIdInject()) {
+            Method method = MethodFinder.findMethodBy(joinPoint);
+            Parameter[] parameters = method.getParameters();
+
+            Integer argIndex = ArgIndexFinder.findIndexByAnnotation(parameters, UserIdInject.class);
+            if (argIndex == null) {
+                throw new IllegalArgumentException("토큰 payload 를 받을 파라미터가 누락되었습니다.");
+            }
+            args[argIndex] = payload.get(PAYLOAD_USER_ID_KEY);
         }
-        args[argIndex] = payload.get(PAYLOAD_USER_ID_KEY);
 
         return joinPoint.proceed(args);
     }

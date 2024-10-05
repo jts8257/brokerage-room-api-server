@@ -67,8 +67,6 @@ public class RoomQueryPageService {
                 maxDeposit
         );
 
-        var responses = rooms.stream().map(RoomAbbrResponse::new).toList();
-        System.out.println("responses: " + responses);
         return rooms.stream().map(RoomAbbrResponse::new).toList();
     }
 }

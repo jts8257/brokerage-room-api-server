@@ -1,14 +1,15 @@
 package com.tsjeong.brokerage.controller;
 
 import com.tsjeong.brokerage.aop.annotation.TokenValidate;
-import com.tsjeong.brokerage.aop.annotation.UserIdInject;
 import com.tsjeong.brokerage.dto.ResponseDto;
 import com.tsjeong.brokerage.dto.category.CategoryResponse;
 import com.tsjeong.brokerage.service.category.RoomTypeReadService;
 import com.tsjeong.brokerage.service.category.TransactionTypeReadService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -20,10 +21,10 @@ public class CategoryController {
     private final RoomTypeReadService roomTypeReadService;
     private final TransactionTypeReadService transactionTypeReadService;
 
-    @TokenValidate
+    @TokenValidate(isUserIdInject = false)
     @GetMapping("/categories/room-types")
     public ResponseEntity<ResponseDto<List<CategoryResponse>>> getRoomTypes(
-            @UserIdInject Long actionUserId
+            @RequestHeader(HttpHeaders.AUTHORIZATION) String authorization
     ) {
 
         List<CategoryResponse> categories = roomTypeReadService.getAllRoomTypes().stream()
@@ -34,10 +35,10 @@ public class CategoryController {
     }
 
 
-    @TokenValidate
+    @TokenValidate(isUserIdInject = false)
     @GetMapping("/categories/transaction-types")
     public ResponseEntity<ResponseDto<List<CategoryResponse>>> getTransactionTypes(
-            @UserIdInject Long actionUserId
+            @RequestHeader(HttpHeaders.AUTHORIZATION) String authorization
     ) {
 
         List<CategoryResponse> categories = transactionTypeReadService.getAllTransactionTypes().stream()
