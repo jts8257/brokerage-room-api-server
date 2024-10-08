@@ -39,11 +39,24 @@ $> docker compose -f ./package/docker-compose.yml down
 - DB : MySQL 8, Spring Data JPA, QueryDSL
 - jwt: jjwt 라이브러리를 이용해 구현
 
----
-## 테스트 구성
-- Integration Test : Spring Bean 을 모두 로드하여 성공적으로 기능이 동작하는지 점검 
-- Slice Test : 일부 Bean 을 로드하여 성공적인 기능 동작, 예외 사항을 점검
-- Unit Test : POJO 에 대한 테스트 혹은 서비스 레이어에 Mock 을 주입하여 비즈니스 로직을 점검 
+### 프로젝트 구조
+```bash
+├── BrokerageApplication.java
+├── aop # AOP 구현
+├── config # JPA, JWT, Swagger, CORS 설정
+├── controller # 컨틀롤러
+├── dto # Request, Response, 공통, 에러 DTO, DTO Mapper
+├── entity # 내방, 유저 엔티티
+├── exception # 공통 예외 처리, 에러 코드, 커스텀 예외
+├── repsoitory 
+└── service # 로직 구현
+```
+### 테스트 구성
+```bash
+├── integration #Spring Bean 을 모두 로드하여 성공적으로 기능이 동작하는지 점검  
+├── slice # 일부 Bean 을 로드하여 성공적인 기능 동작, 예외 사항을 점검
+└── unit # POJO 에 대한 테스트, 서비스 레이어 로직에 집중한 테스트 
+```
 
 ---
 ## 가산 요소
