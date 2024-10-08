@@ -35,7 +35,7 @@ public class JjwtValidator implements TokenValidator {
                     .getPayload();
 
             return Map.of(
-                    PAYLOAD_USER_ID_KEY, ((Number) claims.get(PAYLOAD_USER_ID_KEY)).intValue()
+                    PAYLOAD_USER_ID_KEY, ((Number) claims.get(PAYLOAD_USER_ID_KEY)).longValue()
             );
 
         } catch (ExpiredJwtException expired) {
