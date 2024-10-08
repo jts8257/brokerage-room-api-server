@@ -1,22 +1,33 @@
 spring:
+  sql:
+    init:
+      mode: always
   datasource:
     url: ${SPRING_DATASOURCE_URL}
-    username: ${SPRING_DATASOURCE_USERNAME}
-    password: ${SPRING_DATASOURCE_PASSWORD}
+    username: ${db_user}
+    password: ${db_user_password}
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
+    defer-datasource-initialization: false
     open-in-view: false
     hibernate:
       ddl-auto: validate
     properties:
       hibernate:
-        show_sql: true
-        format_sql: true
-        use_sql_comments: true
-        generate_statistics: true
+        dialect: org.hibernate.dialect.MySQL8Dialect
+        show_sql: false
+        format_sql: false
+        use_sql_comments: false
+        generate_statistics: false
 
   encryption:
     jwt:
       secret-key: ${JWT_ENCRYPTION_SECRET_KEY}
       lifetime: ${JWT_ACCESS_TOKEN_LIFE_TIME_SEC}
+
+logging:
+  level:
+    org.springframework.boot.autoconfigure.sql.init: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE

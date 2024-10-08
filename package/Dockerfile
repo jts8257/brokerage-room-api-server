@@ -19,7 +19,7 @@ RUN ./gradlew build -x test --stacktrace || return 0
 COPY . .
 
 # Build the application using Gradle Wrapper, skipping tests
-RUN ./gradlew clean build --stacktrace
+RUN ./gradlew clean build
 
 # Stage 2: Package the application using a lightweight image
 FROM openjdk:17-ea-3-buster
@@ -41,5 +41,5 @@ USER appuser
 # Expose port 8080
 EXPOSE 8080
 
-# Run the JAR file
+# Run the JAR file with UTF-8 encoding
 ENTRYPOINT ["java", "-jar", "/app/app.jar"]

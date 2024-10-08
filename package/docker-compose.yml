@@ -20,7 +20,7 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
-      start_period: 30s
+      start_period: 50s
 
   # Spring Boot Application
   room-api-service:
@@ -29,7 +29,7 @@ services:
       dockerfile: package/Dockerfile
     container_name: room-api-service
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-service:3306/app_db
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-service:3306/app_db?useUnicode=true&characterEncoding=UTF-8
       SPRING_DATASOURCE_USERNAME: db_user
       SPRING_DATASOURCE_PASSWORD: db_user_password
       JWT_ENCRYPTION_SECRET_KEY: A=D-_EJdaC-bJ-PKMJO-1950as!

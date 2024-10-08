@@ -19,11 +19,13 @@ public class ExceptionLoggingHelper {
             HttpStatus httpStatus
     ) {
         if (e != null) {
-            StackTraceElement[] fullTraces = e.getStackTrace();
-            Throwable truncatedException = new Throwable(e.toString());
-
-            truncatedException.setStackTrace(Arrays.copyOf(fullTraces, Math.min(200, fullTraces.length)));
-            log.error("[%s][%s]:[%d]\n{}".formatted(request.getMethod(), request.getRequestURI(), httpStatus.value()), e.getMessage(), truncatedException);
+            log.error("[{}][{}]:[{}] - {}",
+                    request.getMethod(),
+                    request.getRequestURI(),
+                    httpStatus.value(),
+                    e.getMessage()
+            );
+            log.error("Full stacktrace:", e);
         }
     }
 }
