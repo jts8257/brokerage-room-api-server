@@ -34,9 +34,68 @@ public class RoomPaginationRepositoryImpl implements RoomPaginationRepository {
         QRoom room = QRoom.room;
         QRoomTransaction roomTransaction = QRoomTransaction.roomTransaction;
 
-        BooleanBuilder builder = new BooleanBuilder();
+        BooleanBuilder builder = getCommonConditions(
+                room, roomTransaction, lastRoomId,
+                roomTypeIds, transactionTypeIds, minRent, maxRent, minDeposit, maxDeposit
+        );
 
-        // 커서 조건 (페이징을 위한 조건)
+        return queryFactory.selectFrom(room)
+                .innerJoin(room.roomType).fetchJoin()
+                .innerJoin(room.user).fetchJoin()
+                .innerJoin(room.transactions, roomTransaction).fetchJoin()
+                .innerJoin(roomTransaction.transactionType).fetchJoin()
+                .where(builder)
+                .orderBy(room.id.desc())
+                .limit(pageSize)
+                .fetch();
+    }
+
+
+    @Override
+    public List<Room> findAllRoomBy(
+            long userId,
+            long lastRoomId,
+            int pageSize,
+            List<Integer> roomTypeIds,
+            List<Integer> transactionTypeIds,
+            BigDecimal minRent,
+            BigDecimal maxRent,
+            BigDecimal minDeposit,
+            BigDecimal maxDeposit
+    ){
+
+        QRoom room = QRoom.room;
+        QRoomTransaction roomTransaction = QRoomTransaction.roomTransaction;
+
+        BooleanBuilder builder = getCommonConditions(
+                room, roomTransaction, lastRoomId,
+                roomTypeIds, transactionTypeIds, minRent, maxRent, minDeposit, maxDeposit
+        );
+
+        return queryFactory.selectFrom(room)
+                .innerJoin(room.roomType).fetchJoin()
+                .innerJoin(room.user).on(room.user.id.eq(userId))
+                .innerJoin(room.transactions, roomTransaction).fetchJoin()
+                .innerJoin(roomTransaction.transactionType).fetchJoin()
+                .where(builder)
+                .orderBy(room.id.desc())
+                .limit(pageSize)
+                .fetch();
+    }
+
+    private BooleanBuilder getCommonConditions(
+            QRoom room,
+            QRoomTransaction roomTransaction,
+            long lastRoomId,
+            List<Integer> roomTypeIds,
+            List<Integer> transactionTypeIds,
+            BigDecimal minRent,
+            BigDecimal maxRent,
+            BigDecimal minDeposit,
+            BigDecimal maxDeposit
+    ) {
+
+        BooleanBuilder builder = new BooleanBuilder();
         builder.and(room.id.lt(lastRoomId));
 
         // RoomType 조건 추가
@@ -68,71 +127,6 @@ public class RoomPaginationRepositoryImpl implements RoomPaginationRepository {
             builder.and(roomTransaction.deposit.loe(maxDeposit));
         }
 
-        return queryFactory.selectFrom(room)
-                .innerJoin(room.roomType).fetchJoin()
-                .innerJoin(room.user).fetchJoin()
-                .innerJoin(room.transactions, roomTransaction).fetchJoin()
-                .innerJoin(roomTransaction.transactionType).fetchJoin()
-                .where(builder)
-                .orderBy(room.id.desc())
-                .limit(pageSize)
-                .fetch();
-    }
-
-    @Override
-    public List<Room> findAllRoomBy(
-            long userId,
-            long lastRoomId,
-            int pageSize,
-            List<Integer> roomTypeIds,
-            List<Integer> transactionTypeIds,
-            BigDecimal minRent,
-            BigDecimal maxRent,
-            BigDecimal minDeposit,
-            BigDecimal maxDeposit
-    ){
-
-        QRoom room = QRoom.room;
-        QRoomTransaction roomTransaction = QRoomTransaction.roomTransaction;
-
-        BooleanBuilder builder = new BooleanBuilder();
-
-        builder.and(room.id.lt(lastRoomId));
-
-        if (roomTypeIds != null && !roomTypeIds.isEmpty()) {
-            builder.and(room.roomType.id.in(roomTypeIds));
-        }
-
-        if (transactionTypeIds != null && !transactionTypeIds.isEmpty()) {
-            builder.and(roomTransaction.transactionType.id.in(transactionTypeIds));
-        }
-
-        if (minRent != null) {
-            builder.and(roomTransaction.rentMonthly.goe(minRent));
-        }
-
-        if (maxRent != null) {
-            builder.and(roomTransaction.rentMonthly.loe(maxRent));
-            if (minRent == null) {
-                builder.or(roomTransaction.rentMonthly.isNull());
-            }
-        }
-
-        if (minDeposit != null) {
-            builder.and(roomTransaction.deposit.goe(minDeposit));
-        }
-        if (maxDeposit != null) {
-            builder.and(roomTransaction.deposit.loe(maxDeposit));
-        }
-
-        return queryFactory.selectFrom(room)
-                .innerJoin(room.roomType).fetchJoin()
-                .innerJoin(room.user).on(room.user.id.eq(userId))
-                .innerJoin(room.transactions, roomTransaction).fetchJoin()
-                .innerJoin(roomTransaction.transactionType).fetchJoin()
-                .where(builder)
-                .orderBy(room.id.desc())
-                .limit(pageSize)
-                .fetch();
+        return builder;
     }
 }

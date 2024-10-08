@@ -18,7 +18,6 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -63,13 +62,11 @@ public class RoomQueryPageService {
                     .toList();
         }
 
-
         AtomicReference<BigDecimal> minRef = new AtomicReference<>(minRent);
         AtomicReference<BigDecimal> maxRef = new AtomicReference<>(maxRent);
         minMaxValueSwap(minRef, maxRef);
         minRent = minRef.get();
         maxRent = maxRef.get();
-
 
         minRef = new AtomicReference<>(minDeposit);
         maxRef = new AtomicReference<>(maxDeposit);
@@ -95,7 +92,7 @@ public class RoomQueryPageService {
                     }
                 })
                 .filter(Objects::nonNull)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     private void minMaxValueSwap(AtomicReference<BigDecimal> minRef, AtomicReference<BigDecimal> maxRef) {
