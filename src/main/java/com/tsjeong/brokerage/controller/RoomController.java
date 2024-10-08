@@ -1,5 +1,6 @@
 package com.tsjeong.brokerage.controller;
 
+import com.tsjeong.brokerage.aop.annotation.JWT;
 import com.tsjeong.brokerage.aop.annotation.TokenValidate;
 import com.tsjeong.brokerage.aop.annotation.UserIdInject;
 import com.tsjeong.brokerage.dto.ResponseDto;
@@ -39,8 +40,8 @@ public class RoomController {
     @PostMapping
     @TokenValidate
     public ResponseEntity<ResponseDto<RoomDetailResponse>> createRoom(
+            @JWT @RequestHeader(HttpHeaders.AUTHORIZATION) String authorization,
             @UserIdInject Long actionUserId,
-            @RequestHeader(HttpHeaders.AUTHORIZATION) String authorization,
             @RequestBody @Valid RoomCreateRequest requestBody
     ) {
 
@@ -61,8 +62,8 @@ public class RoomController {
     @GetMapping("/{roomId}")
     @TokenValidate
     public ResponseEntity<ResponseDto<RoomDetailResponse>> getDetailRoom(
+            @JWT @RequestHeader(HttpHeaders.AUTHORIZATION) String authorization,
             @UserIdInject Long actionUserId,
-            @RequestHeader(HttpHeaders.AUTHORIZATION) String authorization,
             @PathVariable Long roomId
     ) {
 
@@ -75,8 +76,8 @@ public class RoomController {
     @GetMapping
     @TokenValidate
     public ResponseEntity<ResponseDto<List<RoomAbbrResponse>>> getRooms(
+            @JWT @RequestHeader(HttpHeaders.AUTHORIZATION) String authorization,
             @UserIdInject Long actionUserId,
-            @RequestHeader(HttpHeaders.AUTHORIZATION) String authorization,
             @RequestParam(required = false, defaultValue = "9223372036854775807") Long lastRoomId,
             @RequestParam @Min(1) @Max(50) int pageSize,
             @RequestParam(required = false) List<Integer> roomTypeIds,
@@ -96,8 +97,8 @@ public class RoomController {
     @PutMapping("/{roomId}")
     @TokenValidate
     public ResponseEntity<ResponseDto<RoomDetailResponse>> updateRoom(
+            @JWT @RequestHeader(HttpHeaders.AUTHORIZATION) String authorization,
             @UserIdInject Long actionUserId,
-            @RequestHeader(HttpHeaders.AUTHORIZATION) String authorization,
             @PathVariable Long roomId,
             @RequestBody RoomUpdateRequest requestBody
     ) {
@@ -120,8 +121,8 @@ public class RoomController {
     @DeleteMapping("/{roomId}")
     @TokenValidate
     public ResponseEntity<ResponseDto<Boolean>> deleteRoom(
+            @JWT @RequestHeader(HttpHeaders.AUTHORIZATION) String authorization,
             @UserIdInject Long actionUserId,
-            @RequestHeader(HttpHeaders.AUTHORIZATION) String authorization,
             @PathVariable Long roomId
     ) {
 

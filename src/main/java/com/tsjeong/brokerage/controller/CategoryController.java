@@ -1,5 +1,6 @@
 package com.tsjeong.brokerage.controller;
 
+import com.tsjeong.brokerage.aop.annotation.JWT;
 import com.tsjeong.brokerage.aop.annotation.TokenValidate;
 import com.tsjeong.brokerage.dto.ResponseDto;
 import com.tsjeong.brokerage.dto.category.CategoryResponse;
@@ -24,7 +25,7 @@ public class CategoryController {
     @TokenValidate(isUserIdInject = false)
     @GetMapping("/categories/room-types")
     public ResponseEntity<ResponseDto<List<CategoryResponse>>> getRoomTypes(
-            @RequestHeader(HttpHeaders.AUTHORIZATION) String authorization
+            @JWT @RequestHeader(HttpHeaders.AUTHORIZATION) String authorization
     ) {
 
         List<CategoryResponse> categories = roomTypeReadService.getAllRoomTypes().stream()
@@ -38,7 +39,7 @@ public class CategoryController {
     @TokenValidate(isUserIdInject = false)
     @GetMapping("/categories/transaction-types")
     public ResponseEntity<ResponseDto<List<CategoryResponse>>> getTransactionTypes(
-            @RequestHeader(HttpHeaders.AUTHORIZATION) String authorization
+            @JWT @RequestHeader(HttpHeaders.AUTHORIZATION) String authorization
     ) {
 
         List<CategoryResponse> categories = transactionTypeReadService.getAllTransactionTypes().stream()

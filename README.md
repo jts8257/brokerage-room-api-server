@@ -5,7 +5,11 @@
 1. Docker 설치 ['가이드 링크'](https://docs.docker.com/engine/install/)
 2. 이미지 빌드 및 컨테이너 실행
 ```bash
+# 최초 이미지 빌드와 이미지에 패키징된 어플리케이션 실행을 함께 하려면
 $> docker compose -f ./package/docker-compose.yml up --build -d
+
+# 이미 빌드된 이미지를 실행하려면
+$> docker compose -f ./package/docker-compose.yml up -d
 ```
 3. 어플리케이션 중지/삭제
 ```bash 
@@ -14,3 +18,8 @@ $> docker compose -f ./package/docker-compose.yml stop
 # 컨테이너 삭제
 $> docker compose -f ./package/docker-compose.yml down
 ```
+
+Todo 문서화
+Todo 컨트롤러 테스트 
+Todo CORS 풀기
+
