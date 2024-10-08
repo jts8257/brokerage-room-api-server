@@ -3,6 +3,7 @@ package com.tsjeong.brokerage.controller;
 import com.tsjeong.brokerage.aop.annotation.TokenValidate;
 import com.tsjeong.brokerage.aop.annotation.UserIdInject;
 import com.tsjeong.brokerage.dto.ResponseDto;
+import com.tsjeong.brokerage.dto.room.mapper.RoomMapper;
 import com.tsjeong.brokerage.dto.room.request.RoomCreateRequest;
 import com.tsjeong.brokerage.dto.room.request.RoomUpdateRequest;
 import com.tsjeong.brokerage.dto.room.response.RoomAbbrResponse;
@@ -44,6 +45,7 @@ public class RoomController {
             @RequestHeader(HttpHeaders.AUTHORIZATION) String authorization,
             @RequestBody @Valid RoomCreateRequest requestBody
     ) {
+
         var room = roomCreateService.createRoom(
                 actionUserId,
                 requestBody.getRoomTypeId(),
@@ -54,7 +56,7 @@ public class RoomController {
                 requestBody.getTransactions()
         );
 
-        var response = new RoomDetailResponse(room);
+        var response = RoomMapper.toRoomDetailResponse(room, actionUserId);
         return ResponseEntity.status(HttpStatus.CREATED).body(ResponseDto.success(response));
     }
 
@@ -65,7 +67,8 @@ public class RoomController {
             @RequestHeader(HttpHeaders.AUTHORIZATION) String authorization,
             @PathVariable Long roomId
     ) {
-        var response = roomQueryDetailService.getRoomForDetailQuery(roomId);
+
+        var response = roomQueryDetailService.getRoomForDetailQuery(roomId, actionUserId);
 
         return ResponseEntity.ok(ResponseDto.success(response));
     }
@@ -110,7 +113,8 @@ public class RoomController {
                 requestBody.getAddressDetail(),
                 requestBody.getDescription(),
                 requestBody.getTransactions());
-        var response = new RoomDetailResponse(room);
+
+        var response = RoomMapper.toRoomDetailResponse(room, actionUserId);
 
         return ResponseEntity.ok(ResponseDto.success(response));
     }

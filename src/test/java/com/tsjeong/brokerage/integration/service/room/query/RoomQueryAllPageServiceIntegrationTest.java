@@ -112,12 +112,12 @@ public class RoomQueryAllPageServiceIntegrationTest extends RoomQueryTestBase {
         // Then
         assertNotNull(rooms1);
         assertEquals(8, rooms1.size());
-        rooms1.forEach(room -> assertEquals(roomName1, room.getRoomTypeName(),"%s 을 조회했지만 다른 방이 조회되었습니다.".formatted(roomName1)));
+        rooms1.forEach(room -> assertEquals(roomName1, room.roomTypeName(),"%s 을 조회했지만 다른 방이 조회되었습니다.".formatted(roomName1)));
 
         Set<String> roomNames = Set.of(roomName1, roomName2);
         assertNotNull(rooms2);
         assertEquals(16, rooms2.size());
-        rooms2.forEach(room -> assertTrue(roomNames.contains(room.getRoomTypeName()),"%s 을 조회했지만 다른 방이 조회되었습니다.".formatted(roomNames)));
+        rooms2.forEach(room -> assertTrue(roomNames.contains(room.roomTypeName()),"%s 을 조회했지만 다른 방이 조회되었습니다.".formatted(roomNames)));
     }
 
 
@@ -149,16 +149,16 @@ public class RoomQueryAllPageServiceIntegrationTest extends RoomQueryTestBase {
         Set<String> txNameFound = new HashSet<>();
         assertNotNull(rooms1);
         assertEquals(8, rooms1.size());
-        rooms1.forEach(room -> room.getTransactions().forEach(
-                tx ->txNameFound.add(tx.getTransactionTypeName())
+        rooms1.forEach(room -> room.transactions().forEach(
+                tx ->txNameFound.add(tx.transactionTypeName())
         ));
         assertTrue(txNameExpected.containsAll(txNameFound));
 
         txNameExpected = Set.of(jeonse.getName(), rent.getName());
         assertNotNull(rooms2);
         assertEquals(16, rooms2.size());
-        rooms2.forEach(room -> room.getTransactions().forEach(
-                tx ->txNameFound.add(tx.getTransactionTypeName())
+        rooms2.forEach(room -> room.transactions().forEach(
+                tx ->txNameFound.add(tx.transactionTypeName())
         ));
         assertTrue(txNameExpected.containsAll(txNameFound));
     }
@@ -192,8 +192,8 @@ public class RoomQueryAllPageServiceIntegrationTest extends RoomQueryTestBase {
 
         assertNotNull(rooms1);
         assertEquals(8, rooms1.size());
-        rooms1.forEach(room -> room.getTransactions().forEach(
-                tx ->txNameFound.add(tx.getTransactionTypeName())
+        rooms1.forEach(room -> room.transactions().forEach(
+                tx ->txNameFound.add(tx.transactionTypeName())
         ));
         assertTrue(txNameExpected.containsAll(txNameFound));
 
@@ -201,8 +201,8 @@ public class RoomQueryAllPageServiceIntegrationTest extends RoomQueryTestBase {
 
         assertNotNull(rooms2);
         assertEquals(4, rooms2.size());
-        rooms2.forEach(room -> room.getTransactions().forEach(
-                tx ->txNameFound.add(tx.getTransactionTypeName())
+        rooms2.forEach(room -> room.transactions().forEach(
+                tx ->txNameFound.add(tx.transactionTypeName())
         ));
         assertTrue(txNameExpected.containsAll(txNameFound));
     }
@@ -236,8 +236,8 @@ public class RoomQueryAllPageServiceIntegrationTest extends RoomQueryTestBase {
         assertNotNull(rooms1);
 
         assertEquals(12, rooms1.size());
-        rooms1.forEach(room -> room.getTransactions().forEach(
-                tx ->txFound.add(tx.getTransactionTypeName())
+        rooms1.forEach(room -> room.transactions().forEach(
+                tx ->txFound.add(tx.transactionTypeName())
         ));
         assertEquals(2, txFound.size());
 
@@ -245,8 +245,8 @@ public class RoomQueryAllPageServiceIntegrationTest extends RoomQueryTestBase {
 
         assertNotNull(rooms2);
         assertEquals(16, rooms2.size());
-        rooms2.forEach(room -> room.getTransactions().forEach(
-                tx ->txFound.add(tx.getTransactionTypeName())
+        rooms2.forEach(room -> room.transactions().forEach(
+                tx ->txFound.add(tx.transactionTypeName())
         ));
         assertEquals(2, txFound.size());
     }

@@ -1,15 +1,21 @@
 package com.tsjeong.brokerage.dto.room.response;
 
-import com.tsjeong.brokerage.entity.room.Room;
-import lombok.Getter;
+import java.time.ZonedDateTime;
+import java.util.List;
 
 
-@Getter
-public class RoomDetailResponse extends RoomAbbrResponse {
-    private final String description;
-
-    public RoomDetailResponse(Room room) {
-        super(room);
-        description = room.getDetail() == null ? null : room.getDetail().getDescription();
-    }
-}
+public record RoomDetailResponse(
+        String id,
+        Integer roomTypeId,
+        String roomTypeName,
+        String addressJibun,
+        String addressRoad,
+        String addressDetail,
+        List<RoomTransactionResponse> transactions,
+        ZonedDateTime postedAt,
+        ZonedDateTime updatedAt,
+        String userName,
+        String description,
+        Boolean isEditable,
+        Boolean isDeletable
+) {}

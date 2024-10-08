@@ -1,5 +1,6 @@
 package com.tsjeong.brokerage.service.room.query;
 
+import com.tsjeong.brokerage.dto.room.mapper.RoomMapper;
 import com.tsjeong.brokerage.dto.room.response.RoomAbbrResponse;
 import com.tsjeong.brokerage.entity.room.Room;
 import com.tsjeong.brokerage.entity.room.RoomType;
@@ -52,10 +53,11 @@ public class RoomQueryPageService {
         List<Room> rooms = switch (mode) {
             case ALL -> roomRepository.findAllRoomBy(lastRoomId, pageSize,
                     roomTypeIds, transactionTypeIds, minRent, maxRent, minDeposit, maxDeposit);
+
             case MY ->  roomRepository.findAllRoomBy(actionUserId, lastRoomId, pageSize,
                     roomTypeIds, transactionTypeIds, minRent, maxRent, minDeposit, maxDeposit);
         };
 
-        return rooms.stream().map(RoomAbbrResponse::new).toList();
+        return rooms.stream().map(room -> RoomMapper.toRoomAbbrResponse(room, actionUserId)).toList();
     }
 }
