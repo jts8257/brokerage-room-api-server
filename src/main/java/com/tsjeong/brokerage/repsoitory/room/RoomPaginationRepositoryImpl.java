@@ -3,7 +3,6 @@ package com.tsjeong.brokerage.repsoitory.room;
 
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-
 import com.tsjeong.brokerage.entity.room.QRoom;
 import com.tsjeong.brokerage.entity.room.QRoomTransaction;
 import com.tsjeong.brokerage.entity.room.Room;

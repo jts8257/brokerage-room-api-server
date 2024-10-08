@@ -6,6 +6,7 @@ import com.tsjeong.brokerage.dto.token.TokenIssueRequest;
 import com.tsjeong.brokerage.dto.user.UserReadResponse;
 import com.tsjeong.brokerage.service.token.issue.TokenIssueService;
 import com.tsjeong.brokerage.service.user.UserReadService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 import java.util.List;
 
+@Tag(name = "토큰 발급 및 유저 리스트 조회")
 @RestController
 @RequiredArgsConstructor
 public class TokenController {

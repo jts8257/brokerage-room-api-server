@@ -12,7 +12,7 @@ plugins {
 }
 
 group = 'com.tsjeong'
-version = '1.0.0'
+version = '1.1.0'
 
 java {
 	sourceCompatibility = '17'
@@ -39,7 +39,7 @@ dependencies {
 
 	implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
 	implementation "com.querydsl:querydsl-apt:${queryDslVersion}"
-
+	implementation 'org.springdoc:springdoc-openapi-ui:1.7.0'
 
 	compileOnly 'org.projectlombok:lombok'
 
@@ -69,13 +69,14 @@ sourceSets {
 	main.java.srcDir querydslDir
 }
 
+configurations {
+	querydsl.extendsFrom compileClasspath
+}
+
 compileQuerydsl {
 	options.annotationProcessorPath = configurations.querydsl
 }
 
-configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
-	}
-	querydsl.extendsFrom compileClasspath
+springBoot {
+	buildInfo()
 }

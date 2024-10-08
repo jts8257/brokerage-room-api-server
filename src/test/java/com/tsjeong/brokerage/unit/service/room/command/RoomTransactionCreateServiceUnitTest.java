@@ -183,23 +183,6 @@ class RoomTransactionCreateServiceUnitTest {
     }
 
     @Test
-    @DisplayName("RoomTransactionCreateService.createRoomTransactionBy() - 전세에 임대료, 보증금 누락시 예외 발생")
-    void shouldThrowExceptionWhenJeonseHaveNoRentAndDeposit() {
-        // Given
-        requestJeonse1.setDeposit(null);
-        int transactionId = requestJeonse1.getTransactionId();
-        List<RoomTransactionCreateRequest> transactions = List.of(requestJeonse1);
-
-        // When & Then
-        ApplicationException exception = assertThrows(ApplicationException.class,
-                () -> roomTransactionCreateService.createRoomTransactionBy(room, transactions));
-
-        assertEquals(exception.getMessage(), "거래유형 '전세'에 대한 임대료 와 보증금이 모두 누락되었습니다.");
-        verify(transactionTypeReadService, times(1)).getTransactionTypeById(transactionId);
-        verify(roomTransactionRepository, never()).saveAll(anyList());
-    }
-
-    @Test
     @DisplayName("RoomTransactionCreateService.createRoomTransactionBy() - 전세에 보증금 누락시 예외 발생")
     void shouldThrowExceptionWhenJeonseHaveNoDeposit() {
         // Given

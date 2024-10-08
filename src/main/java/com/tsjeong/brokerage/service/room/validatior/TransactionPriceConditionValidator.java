@@ -10,11 +10,6 @@ public class TransactionPriceConditionValidator {
 
     public static void validate(TransactionType type, BigDecimal rentMonthly, BigDecimal deposit) {
 
-        if (Objects.isNull(rentMonthly) && Objects.isNull(deposit)) {
-            throw ErrorCode.ENTITY_REGISTER_CONFLICT
-                    .build("거래유형 '%s'에 대한 임대료 와 보증금이 모두 누락되었습니다.".formatted(type.getName()));
-        }
-
         if (!type.getIsDepositOnly() && (rentMonthly == null || rentMonthly.signum() == 0)) {
             throw ErrorCode.ENTITY_REGISTER_CONFLICT.build("거래유형 '%s'에 대한 임대료가 누락되었습니다.".formatted(type.getName()));
         }
