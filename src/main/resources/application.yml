@@ -3,9 +3,9 @@ spring:
     init:
       mode: always
   datasource:
-    url: jdbc:mysql://localhost:3306/app_db?useUnicode=true&characterEncoding=UTF-8
-    username: db_user
-    password: db_user_password
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${db_user}
+    password: ${db_user_password}
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
@@ -23,8 +23,8 @@ spring:
 
   encryption:
     jwt:
-      secret-key: A=D-_EJdaC-bJ-PKMJO-1950as!
-      lifetime: 604800
+      secret-key: ${JWT_ENCRYPTION_SECRET_KEY}
+      lifetime: ${JWT_ACCESS_TOKEN_LIFE_TIME_SEC}
 
 logging:
   level:
