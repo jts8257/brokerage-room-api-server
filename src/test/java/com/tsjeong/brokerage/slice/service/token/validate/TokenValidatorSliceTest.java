@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.*;
 )
 @EnableConfigurationProperties(JwtConfig.class)
 @ActiveProfiles("test")
-public class TokenValidatorSliceTest {
+class TokenValidatorSliceTest {
     @Autowired
     private TokenIssuer tokenIssuer;
 

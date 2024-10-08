@@ -1,4 +1,4 @@
-package com.tsjeong.brokerage.integration.context;
+package com.tsjeong.brokerage.integration;
 
 import com.tsjeong.brokerage.integration.testconfig.IntegrationTestBase;
 import org.junit.jupiter.api.Test;

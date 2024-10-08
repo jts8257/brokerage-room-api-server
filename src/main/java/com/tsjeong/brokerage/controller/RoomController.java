@@ -31,10 +31,8 @@ import java.util.List;
 @RequestMapping("/rooms")
 public class RoomController {
     private final RoomCreateService roomCreateService;
-
     private final RoomQueryDetailService roomQueryDetailService;
     private final RoomQueryPageService roomQueryPageService;
-
     private final RoomUpdateService roomUpdateService;
     private final RoomDeleteService roomDeleteService;
 

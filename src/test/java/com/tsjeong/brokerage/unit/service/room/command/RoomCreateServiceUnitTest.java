@@ -5,9 +5,9 @@ import com.tsjeong.brokerage.entity.room.RoomType;
 import com.tsjeong.brokerage.entity.user.Users;
 import com.tsjeong.brokerage.exception.ApplicationException;
 import com.tsjeong.brokerage.repsoitory.room.RoomRepository;
+import com.tsjeong.brokerage.service.category.RoomTypeReadService;
 import com.tsjeong.brokerage.service.room.command.RoomCreateService;
 import com.tsjeong.brokerage.service.room.command.RoomTransactionCreateService;
-import com.tsjeong.brokerage.service.category.RoomTypeReadService;
 import com.tsjeong.brokerage.service.user.UserReadService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -50,7 +50,7 @@ class RoomCreateServiceUnitTest {
 
 
     @Test
-    @DisplayName("createRoom - 성공적으로 Room 저장")
+    @DisplayName("RoomCreateService.createRoom() - Room 성공적으로  저장")
     void shouldReturnValidRoomWhenAllParameterFilled() {
         // Given
         long userId = 1100;
@@ -80,7 +80,7 @@ class RoomCreateServiceUnitTest {
 
 
     @Test
-    @DisplayName("createRoom - 주소 하나만 있어도 Room 저장")
+    @DisplayName("RoomCreateService.createRoom() - 주소 하나만 있어도 Room 저장")
     void shouldReturnValidRoomWhenOneAddressProvided() {
         // Given
         long userId = 1100;
@@ -110,7 +110,7 @@ class RoomCreateServiceUnitTest {
 
 
     @Test
-    @DisplayName("createRoom - 지번, 도로명 주소가 모두 없을 경우 예외 발생")
+    @DisplayName("RoomCreateService.createRoom() - 지번, 도로명 주소가 모두 없을 경우 예외 발생")
     void shouldThrowExceptionWhenAllAddressIsEmpty() {
         // Given
         long userId = 1100;

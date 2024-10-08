@@ -5,6 +5,7 @@ import com.tsjeong.brokerage.entity.room.Room;
 import com.tsjeong.brokerage.entity.room.RoomDetail;
 import com.tsjeong.brokerage.entity.room.RoomType;
 import com.tsjeong.brokerage.entity.user.Users;
+import com.tsjeong.brokerage.exception.ApplicationException;
 import com.tsjeong.brokerage.exception.ErrorCode;
 import com.tsjeong.brokerage.repsoitory.room.RoomRepository;
 import com.tsjeong.brokerage.service.category.RoomTypeReadService;
@@ -34,7 +35,7 @@ public class RoomCreateService {
             String addressRoad,
             String addressDetail,
             String detail,
-            List<RoomTransactionCreateRequest> transactionsDtos
+            List<RoomTransactionCreateRequest> transactionsDtoList
     ) {
 
         Users user = userReadService.getUsersById(userId);
@@ -57,10 +58,10 @@ public class RoomCreateService {
                 .detail(roomDetail)
                 .build();
 
-        roomRepository.save(room);
+        room = roomRepository.save(room);
 
         room.getTransactions().addAll(
-                roomTransactionCreateService.createRoomTransactionBy(room, transactionsDtos)
+                roomTransactionCreateService.createRoomTransactionBy(room, transactionsDtoList)
         );
 
         return room;

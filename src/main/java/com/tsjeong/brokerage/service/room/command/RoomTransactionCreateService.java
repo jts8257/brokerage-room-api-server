@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.math.BigDecimal;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -44,7 +43,7 @@ public class RoomTransactionCreateService {
         TransactionType type = transactionTypeReadService.getTransactionTypeById(typeId);
 
         if (dtoList.size() > 1) {
-            throw ErrorCode.ENTITY_CONFLICT.build("동일한 거래 유형 '%s'를 2개 이상 등록할 수 없습니다.".formatted(type.getName()));
+            throw ErrorCode.ENTITY_REGISTER_CONFLICT.build("동일한 거래 유형 '%s'를 2개 이상 등록할 수 없습니다.".formatted(type.getName()));
         }
 
         RoomTransactionCreateRequest dto = dtoList.get(0);

@@ -6,8 +6,8 @@ import com.tsjeong.brokerage.entity.room.RoomTransaction;
 import com.tsjeong.brokerage.entity.room.TransactionType;
 import com.tsjeong.brokerage.exception.ApplicationException;
 import com.tsjeong.brokerage.repsoitory.room.RoomTransactionRepository;
-import com.tsjeong.brokerage.service.room.command.RoomTransactionCreateService;
 import com.tsjeong.brokerage.service.category.TransactionTypeReadService;
+import com.tsjeong.brokerage.service.room.command.RoomTransactionCreateService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -71,7 +71,7 @@ class RoomTransactionCreateServiceUnitTest {
     }
 
     @Test
-    @DisplayName("createRoomTransactionBy - 성공적으로 전세 거래 유형 저장")
+    @DisplayName("RoomTransactionCreateService.createRoomTransactionBy() - 성공적으로 전세 거래 유형 저장")
     void shouldReturnValidJeonseEntities() {
         // Given
         int transactionId = requestJeonse1.getTransactionId();
@@ -94,7 +94,7 @@ class RoomTransactionCreateServiceUnitTest {
     }
 
     @Test
-    @DisplayName("createRoomTransactionBy - 성공적으로 임대 거래 유형 저장")
+    @DisplayName("RoomTransactionCreateService.createRoomTransactionBy() - 성공적으로 임대 거래 유형 저장")
     void shouldReturnValidRentEntities() {
         // Given
         int transactionId = requestRent1.getTransactionId();
@@ -117,7 +117,7 @@ class RoomTransactionCreateServiceUnitTest {
     }
 
     @Test
-    @DisplayName("createRoomTransactionBy - 동일한 거래 유형(전세)을 2개 이상 등록하려는 경우 예외 발생")
+    @DisplayName("RoomTransactionCreateService.createRoomTransactionBy() - 동일한 거래 유형(전세)을 2개 이상 등록하려는 경우 예외 발생")
     void shouldThrowExceptionWhenHaveSameTransactionId1() {
         // Given
         int transactionId = requestJeonse1.getTransactionId();
@@ -134,7 +134,7 @@ class RoomTransactionCreateServiceUnitTest {
     }
 
     @Test
-    @DisplayName("createRoomTransactionBy - 동일한 거래 유형(임대)을 2개 이상 등록하려는 경우 예외 발생")
+    @DisplayName("RoomTransactionCreateService.createRoomTransactionBy() - 동일한 거래 유형(임대)을 2개 이상 등록하려는 경우 예외 발생")
     void shouldThrowExceptionWhenHaveSameTransactionId2() {
         // Given
         int transactionId = requestRent1.getTransactionId();
@@ -152,7 +152,7 @@ class RoomTransactionCreateServiceUnitTest {
 
 
     @Test
-    @DisplayName("createRoomTransactionBy - 거래 유형 리스트가 비어있는 경우는 DTO 에서 처리하므로 Exception 이 발생하지 않는다.")
+    @DisplayName("RoomTransactionCreateService.createRoomTransactionBy() - 거래 유형 리스트가 비어있는 경우는 DTO 에서 처리하므로 Exception 이 발생하지 않는다.")
     void shouldNOTThrowExceptionWhenTransactionsEmpty() {
         // Given
         List<RoomTransactionCreateRequest> transactions = List.of();
@@ -167,7 +167,7 @@ class RoomTransactionCreateServiceUnitTest {
     }
 
     @Test
-    @DisplayName("createRoomTransactionBy - 월세에 임대료 누락시 예외 발생")
+    @DisplayName("RoomTransactionCreateService.createRoomTransactionBy() - 월세에 임대료 누락시 예외 발생")
     void shouldThrowExceptionWhenRentHaveNoRentMonthly() {
         // Given
         requestRent1.setRentMonthly(null);
@@ -183,7 +183,7 @@ class RoomTransactionCreateServiceUnitTest {
     }
 
     @Test
-    @DisplayName("createRoomTransactionBy - 전세에 임대료, 보증금 누락시 예외 발생")
+    @DisplayName("RoomTransactionCreateService.createRoomTransactionBy() - 전세에 임대료, 보증금 누락시 예외 발생")
     void shouldThrowExceptionWhenJeonseHaveNoRentAndDeposit() {
         // Given
         requestJeonse1.setDeposit(null);
@@ -200,7 +200,7 @@ class RoomTransactionCreateServiceUnitTest {
     }
 
     @Test
-    @DisplayName("createRoomTransactionBy - 전세에 보증금 누락시 예외 발생")
+    @DisplayName("RoomTransactionCreateService.createRoomTransactionBy() - 전세에 보증금 누락시 예외 발생")
     void shouldThrowExceptionWhenJeonseHaveNoDeposit() {
         // Given
         requestJeonse1.setDeposit(null);

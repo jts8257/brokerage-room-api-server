@@ -27,7 +27,7 @@ class RoomCreateServiceIntegrationTest extends IntegrationTestBase {
 
 
     @Test
-    @DisplayName("createRoom - 성공적으로 Room과 RoomTransaction이 저장됨")
+    @DisplayName("RoomCreateService.createRoom() - Room과 RoomTransaction이 저장됨")
     void shouldCreateRoomAndTransactionsSuccessfully() {
         // Given
         long userId = user1Id;

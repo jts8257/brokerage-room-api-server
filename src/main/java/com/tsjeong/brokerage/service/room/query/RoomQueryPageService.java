@@ -6,27 +6,36 @@ import com.tsjeong.brokerage.entity.room.Room;
 import com.tsjeong.brokerage.entity.room.RoomType;
 import com.tsjeong.brokerage.entity.room.TransactionType;
 import com.tsjeong.brokerage.exception.ApplicationException;
-import com.tsjeong.brokerage.repsoitory.room.RoomRepository;
+import com.tsjeong.brokerage.repsoitory.room.RoomPaginationRepository;
 import com.tsjeong.brokerage.service.category.RoomTypeReadService;
 import com.tsjeong.brokerage.service.category.TransactionTypeReadService;
 import com.tsjeong.brokerage.service.room.query.enums.RoomQueryMode;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
-@RequiredArgsConstructor
 public class RoomQueryPageService {
 
-    private final RoomRepository roomRepository;
+    private final RoomPaginationRepository roomPaginationRepository;
     private final RoomTypeReadService roomTypeReadService;
     private final TransactionTypeReadService transactionTypeReadService;
+
+    public RoomQueryPageService(
+            RoomPaginationRepository roomPaginationRepository,
+            RoomTypeReadService roomTypeReadService,
+            TransactionTypeReadService transactionTypeReadService
+    ) {
+        this.roomPaginationRepository = roomPaginationRepository;
+        this.roomTypeReadService = roomTypeReadService;
+        this.transactionTypeReadService = transactionTypeReadService;
+    }
 
     @Transactional(readOnly = true)
     public List<RoomAbbrResponse> getRoomsPageBy(
@@ -41,7 +50,6 @@ public class RoomQueryPageService {
             BigDecimal maxDeposit,
             RoomQueryMode mode
     ) {
-
         if (roomTypeIds == null || roomTypeIds.isEmpty()) {
             roomTypeIds = roomTypeReadService.getAllRoomTypes().stream()
                     .map(RoomType::getId)
@@ -54,23 +62,25 @@ public class RoomQueryPageService {
                     .toList();
         }
 
-        List<Room> rooms = switch (mode) {
-            case ALL -> roomRepository.findAllRoomBy(lastRoomId, pageSize,
-                    roomTypeIds, transactionTypeIds, minRent, maxRent, minDeposit, maxDeposit);
 
-            case MY ->  roomRepository.findAllRoomBy(actionUserId, lastRoomId, pageSize,
-                    roomTypeIds, transactionTypeIds, minRent, maxRent, minDeposit, maxDeposit);
+        List<Room> rooms = switch (mode) {
+            case ALL -> roomPaginationRepository.findAllRoomBy(
+                    lastRoomId, pageSize, roomTypeIds, transactionTypeIds, minRent, maxRent, minDeposit, maxDeposit);
+
+            case MY -> roomPaginationRepository.findAllRoomBy(
+                    actionUserId, lastRoomId, pageSize, roomTypeIds, transactionTypeIds, minRent, maxRent, minDeposit, maxDeposit);
         };
 
-        List<RoomAbbrResponse> responses = new ArrayList<>();
-        for (Room room : rooms) {
-            try {
-                responses.add(RoomMapper.toRoomAbbrResponse(room, actionUserId));
-            } catch (ApplicationException ape) {
-                log.warn("Failed Mapping : ", ape);
-            }
-
-        }
-        return responses;
+        return rooms.stream()
+                .map(room -> {
+                    try {
+                        return RoomMapper.toRoomAbbrResponse(room, actionUserId);
+                    } catch (ApplicationException ape) {
+                        log.warn("Failed Mapping for room id {}: ", room.getId(), ape);
+                        return null;
+                    }
+                })
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());
     }
 }

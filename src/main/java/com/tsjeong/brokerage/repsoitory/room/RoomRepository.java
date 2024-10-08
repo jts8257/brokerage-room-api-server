@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.Optional;
 
-public interface RoomRepository extends JpaRepository<Room, Long>, RoomPaginationRepository {
+public interface RoomRepository extends JpaRepository<Room, Long> {
 
     @Query("""
     SELECT r FROM Room r
