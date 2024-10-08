@@ -38,22 +38,4 @@ public abstract class TimeStampBase {
         return updatedAt.atZone(ZoneOffset.UTC)
                 .withZoneSameInstant(ZoneId.of("Asia/Seoul"));
     }
-
-    public LocalDate getCreatedDateKST() {
-        if (Objects.isNull(createdAt)) {
-            return null;
-        }
-        return createdAt.atZone(ZoneOffset.UTC)
-                .withZoneSameInstant(ZoneId.of("Asia/Seoul"))
-                .toLocalDate();
-    }
-
-    public LocalDate getUpdatedDateKST() {
-        if (Objects.isNull(updatedAt)) {
-            return null;
-        }
-        return updatedAt.atZone(ZoneOffset.UTC)
-                .withZoneSameInstant(ZoneId.of("Asia/Seoul"))
-                .toLocalDate();
-    }
 }
