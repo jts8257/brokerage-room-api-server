@@ -7,6 +7,7 @@ import com.tsjeong.brokerage.entity.room.TransactionType;
 import com.tsjeong.brokerage.exception.ErrorCode;
 import com.tsjeong.brokerage.repsoitory.room.RoomTransactionRepository;
 import com.tsjeong.brokerage.service.category.TransactionTypeReadService;
+import com.tsjeong.brokerage.service.room.validatior.TransactionPriceConditionValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;

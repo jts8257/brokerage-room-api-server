@@ -1,4 +1,4 @@
-package com.tsjeong.brokerage.service.room.command;
+package com.tsjeong.brokerage.service.room.validatior;
 
 import com.tsjeong.brokerage.entity.room.TransactionType;
 import com.tsjeong.brokerage.exception.ErrorCode;
