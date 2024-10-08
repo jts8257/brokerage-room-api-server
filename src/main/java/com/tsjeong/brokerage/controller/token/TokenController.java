@@ -1,4 +1,4 @@
-package com.tsjeong.brokerage.controller;
+package com.tsjeong.brokerage.controller.token;
 
 import com.tsjeong.brokerage.dto.ResponseDto;
 import com.tsjeong.brokerage.dto.token.TokenIssueResponse;

@@ -1,4 +1,4 @@
-package com.tsjeong.brokerage.controller;
+package com.tsjeong.brokerage.controller.category;
 
 import com.tsjeong.brokerage.aop.annotation.JWT;
 import com.tsjeong.brokerage.aop.annotation.TokenValidate;
