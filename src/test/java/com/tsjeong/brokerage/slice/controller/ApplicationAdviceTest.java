@@ -46,7 +46,7 @@ class ApplicationAdviceTest {
     void shouldReturnUnAuthorizedWhenAuthorizationHeaderMissing() throws Exception {
         mockMvc.perform(get("/dummy/authorization-missing"))
                 .andExpect(status().isUnauthorized())
-                .andExpect(jsonPath("$.error.code").value("AC-0005"));
+                .andExpect(jsonPath("$.error.code").value("AC-0004"));
     }
 
     @Test

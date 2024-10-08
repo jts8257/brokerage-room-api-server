@@ -58,7 +58,7 @@ tasks.named('test') {
 	useJUnitPlatform()
 }
 
-def querydslDir = "src/main/generated"
+def querydslDir = "src/main/java/generated"
 
 querydsl {
 	jpa = true

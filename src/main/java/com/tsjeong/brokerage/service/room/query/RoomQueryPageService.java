@@ -4,10 +4,10 @@ import com.tsjeong.brokerage.dto.room.response.RoomAbbrResponse;
 import com.tsjeong.brokerage.entity.room.Room;
 import com.tsjeong.brokerage.entity.room.RoomType;
 import com.tsjeong.brokerage.entity.room.TransactionType;
+import com.tsjeong.brokerage.repsoitory.room.RoomRepository;
 import com.tsjeong.brokerage.service.category.RoomTypeReadService;
 import com.tsjeong.brokerage.service.category.TransactionTypeReadService;
 import com.tsjeong.brokerage.service.room.query.enums.RoomQueryMode;
-import com.tsjeong.brokerage.service.room.query.strategy.RoomPaginationStrategy;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,8 +19,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class RoomQueryPageService {
 
-    private final RoomPaginationStrategy allRoomPaginationStrategy;
-    private final RoomPaginationStrategy myRoomPaginationStrategy;
+    private final RoomRepository roomRepository;
     private final RoomTypeReadService roomTypeReadService;
     private final TransactionTypeReadService transactionTypeReadService;
 
@@ -38,11 +37,6 @@ public class RoomQueryPageService {
             RoomQueryMode mode
     ) {
 
-        RoomPaginationStrategy strategy = switch (mode) {
-            case ALL -> allRoomPaginationStrategy;
-            case MY -> myRoomPaginationStrategy;
-        };
-
         if (roomTypeIds == null || roomTypeIds.isEmpty()) {
             roomTypeIds = roomTypeReadService.getAllRoomTypes().stream()
                     .map(RoomType::getId)
@@ -55,17 +49,12 @@ public class RoomQueryPageService {
                     .toList();
         }
 
-        List<Room> rooms = strategy.execute(
-                actionUserId,
-                lastRoomId,
-                pageSize,
-                roomTypeIds,
-                transactionTypeIds,
-                minRent,
-                maxRent,
-                minDeposit,
-                maxDeposit
-        );
+        List<Room> rooms = switch (mode) {
+            case ALL -> roomRepository.findAllRoomBy(lastRoomId, pageSize,
+                    roomTypeIds, transactionTypeIds, minRent, maxRent, minDeposit, maxDeposit);
+            case MY ->  roomRepository.findAllRoomBy(actionUserId, lastRoomId, pageSize,
+                    roomTypeIds, transactionTypeIds, minRent, maxRent, minDeposit, maxDeposit);
+        };
 
         return rooms.stream().map(RoomAbbrResponse::new).toList();
     }
