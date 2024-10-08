@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -63,6 +64,19 @@ public class RoomQueryPageService {
         }
 
 
+        AtomicReference<BigDecimal> minRef = new AtomicReference<>(minRent);
+        AtomicReference<BigDecimal> maxRef = new AtomicReference<>(maxRent);
+        minMaxValueSwap(minRef, maxRef);
+        minRent = minRef.get();
+        maxRent = maxRef.get();
+
+
+        minRef = new AtomicReference<>(minDeposit);
+        maxRef = new AtomicReference<>(maxDeposit);
+        minMaxValueSwap(minRef, maxRef);
+        minDeposit = minRef.get();
+        maxDeposit = maxRef.get();
+
         List<Room> rooms = switch (mode) {
             case ALL -> roomPaginationRepository.findAllRoomBy(
                     lastRoomId, pageSize, roomTypeIds, transactionTypeIds, minRent, maxRent, minDeposit, maxDeposit);
@@ -82,5 +96,14 @@ public class RoomQueryPageService {
                 })
                 .filter(Objects::nonNull)
                 .collect(Collectors.toList());
+    }
+
+    private void minMaxValueSwap(AtomicReference<BigDecimal> minRef, AtomicReference<BigDecimal> maxRef) {
+        BigDecimal min = minRef.get();
+        BigDecimal max = maxRef.get();
+        if (min != null && max != null && min.compareTo(max) > 0) {
+            minRef.set(max);
+            maxRef.set(min);
+        }
     }
 }

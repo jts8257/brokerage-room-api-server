@@ -57,15 +57,24 @@ public class RoomQueryController {
     public ResponseEntity<ResponseDto<List<RoomAbbrResponse>>> getRooms(
             @JWT @RequestHeader(HttpHeaders.AUTHORIZATION) String authorization,
             @Parameter(hidden = true) @UserIdInject Long actionUserId,
+
+            @Parameter(required = true, description = "페이지 마지막에 보인 방의 id")
             @RequestParam(required = false, defaultValue = "9223372036854775807") Long lastRoomId,
+
+            @Parameter(required = true, description = "한번에 조회할 방의 개수(1~50)")
             @RequestParam @Min(1) @Max(50) int pageSize,
+
+            @Parameter(description = "조회 대상 방유형 id, 비어있거나 null 이면 전체 조회")
             @RequestParam(required = false) List<Integer> roomTypeIds,
+
+            @Parameter(description = "조회 대상 거래 유형 id, 비어있거나 null 이면 전체 조회")
             @RequestParam(required = false) List<Integer> transactionTypeIds,
-            @RequestParam(required = false) @Min(0) BigDecimal minRent,
-            @RequestParam(required = false) BigDecimal maxRent,
-            @RequestParam(required = false) @Min(0) BigDecimal minDeposit,
-            @RequestParam(required = false) BigDecimal maxDeposit,
-            @RequestParam RoomQueryMode mode
+
+            @Parameter(description = "월세 조회 최소값") @RequestParam(required = false) @Min(0) BigDecimal minRent,
+            @Parameter(description = "월세 조회 최대값") @RequestParam(required = false) @Min(1) BigDecimal maxRent,
+            @Parameter(description = "보증금 조회 최소값") @RequestParam(required = false) @Min(0) BigDecimal minDeposit,
+            @Parameter(description = "보증금 조회 최대값") @RequestParam(required = false) @Min(1) BigDecimal maxDeposit,
+            @Parameter(description = "조회 모드 {MY: 내방, ALL: 모든방}") @RequestParam RoomQueryMode mode
     ) {
         var responses = roomQueryPageService.getRoomsPageBy(
                 actionUserId, lastRoomId, pageSize, roomTypeIds, transactionTypeIds, minRent, maxRent, minDeposit, maxDeposit, mode);
