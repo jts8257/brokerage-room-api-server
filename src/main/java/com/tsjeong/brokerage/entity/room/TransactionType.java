@@ -18,8 +18,10 @@ public class TransactionType {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String name; // enum 이 아닌 DB 에 직접 글자를 넣어 관리함으로써 확장성을 확보
+    @Column(columnDefinition = "VARCHAR(100)")
+    private String name;
 
     @Convert(converter = BooleanToYNConverter.class)
+    @Column(columnDefinition = "VARCHAR(1)")
     private Boolean isDepositOnly;
 }

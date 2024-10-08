@@ -28,15 +28,18 @@ public class Room extends TimeStampBase {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", columnDefinition = "BIGINT")
     private Users user;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "type_id")
+    @JoinColumn(name = "type_id", columnDefinition = "INT")
     private RoomType roomType;
 
+    @Column(columnDefinition = "VARCHAR(200)")
     private String addressJibun;
+    @Column(columnDefinition = "VARCHAR(200)")
     private String addressRoad;
+    @Column(columnDefinition = "VARCHAR(200)")
     private String addressDetail;
 
     @OneToOne(
@@ -44,7 +47,7 @@ public class Room extends TimeStampBase {
             orphanRemoval = true,
             fetch = FetchType.LAZY
     )
-    @JoinColumn(name = "detail_id")
+    @JoinColumn(name = "detail_id", columnDefinition = "BIGINT")
     private RoomDetail detail;
 
     @OneToMany(

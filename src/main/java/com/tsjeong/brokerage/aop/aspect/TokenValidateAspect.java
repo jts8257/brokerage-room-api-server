@@ -13,14 +13,11 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
-import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 
-import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 import java.util.Map;
-import java.util.Objects;
 
 import static com.tsjeong.brokerage.service.token.issue.TokenIssueService.PAYLOAD_USER_ID_KEY;
 import static com.tsjeong.brokerage.service.token.validate.TokenValidateService.TOKEN_PREFIX;
@@ -32,7 +29,6 @@ import static com.tsjeong.brokerage.service.token.validate.TokenValidateService.
 public class TokenValidateAspect {
 
     private final TokenValidateService tokenValidateService;
-    private final HttpServletRequest request;
 
     @Pointcut("@annotation(com.tsjeong.brokerage.aop.annotation.TokenValidate)")
     public void pointcut() {}
