@@ -19,7 +19,10 @@ public enum ErrorCode {
 
     USER_NOT_EXISTS(HttpStatus.NOT_FOUND, "EN-0001", "The user not found"),
     ENTITY_NOT_FOUND(HttpStatus.NOT_FOUND, "EN-0002", "The Entity required is Not exists"),
-    ENTITY_CONFLICT(HttpStatus.CONFLICT, "EN-0003", "The Entity is not qualified database or business constrains"),
+    ENTITY_REGISTER_CONFLICT(HttpStatus.CONFLICT, "EN-0003", "The Entity is not qualified database or business constrains"),
+
+    MISSING_REQUIRED_RELATION(HttpStatus.INTERNAL_SERVER_ERROR, "EN-0004", "The Entity miss its required relation"),
+    ENTITY_READ_CONFLICT(HttpStatus.INTERNAL_SERVER_ERROR, "EN-0005", "The Entity violate business constraints"),
 
     BAD_HEADER(HttpStatus.BAD_REQUEST, "BR-0001", "the required http header is missing"),
     BAD_PARAMETER(HttpStatus.BAD_REQUEST, "BR-0002", "the required http query param is missing"),
