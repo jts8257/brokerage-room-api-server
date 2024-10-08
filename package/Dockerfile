@@ -19,22 +19,12 @@ RUN ./gradlew build -x test --stacktrace || return 0
 COPY . .
 
 # Build the application using Gradle Wrapper, skipping tests
-RUN ./gradlew clean build --stacktrace
+RUN ./gradlew clean build
 
 # Stage 2: Package the application using a lightweight image
 FROM openjdk:17-ea-3-buster
 
 WORKDIR /app
-
-# Install locales package and set UTF-8 as default locale
-RUN apt-get update && apt-get install -y locales && \
-    sed -i '/en_US.UTF-8/s/^# //g' /etc/locale.gen && \
-    locale-gen en_US.UTF-8
-
-# Set environment variables for locale
-ENV LANG=en_US.UTF-8 \
-    LANGUAGE=en_US:en \
-    LC_ALL=en_US.UTF-8
 
 # Create a non-root user to run the application
 RUN useradd -m -u 1000 appuser
@@ -52,4 +42,4 @@ USER appuser
 EXPOSE 8080
 
 # Run the JAR file with UTF-8 encoding
-ENTRYPOINT ["java", "-Dfile.encoding=UTF-8", "-jar", "/app/app.jar"]
+ENTRYPOINT ["java", "-jar", "/app/app.jar"]
