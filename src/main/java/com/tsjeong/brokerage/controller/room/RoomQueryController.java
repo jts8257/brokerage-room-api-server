@@ -34,7 +34,7 @@ public class RoomQueryController {
             @PathVariable Long roomId
     ) {
 
-        var response = roomQueryDetailService.getRoomForDetailQuery(roomId, actionUserId);
+        var response = roomQueryDetailService.getRoomForDetailQuery(actionUserId, roomId);
 
         return ResponseEntity.ok(ResponseDto.success(response));
     }
