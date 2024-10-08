@@ -95,7 +95,7 @@ public class ApplicationAdvice {
 
         ApplicationException ape;
         if (Objects.equals(HttpHeaders.AUTHORIZATION, missingHeader)) {
-            ape = TOKEN_NOT_EXISTS.build();
+            ape = TOKEN_NOT_EXISTS.build("헤더 '%s' 가 누락되었습니다.".formatted(HttpHeaders.AUTHORIZATION));
         } else {
             ape = BAD_HEADER.build("헤더 '%s' 가 누락되었습니다.".formatted(missingHeader));
         }
