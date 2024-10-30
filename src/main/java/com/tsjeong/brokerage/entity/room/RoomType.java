@@ -2,8 +2,7 @@ package com.tsjeong.brokerage.entity.room;
 
 import lombok.*;
 
-import javax.persistence.*;
-
+import jakarta.persistence.*;
 @Getter
 @Entity
 @Table(name = "room_types")

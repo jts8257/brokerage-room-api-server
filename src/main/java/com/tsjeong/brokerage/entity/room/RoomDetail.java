@@ -2,10 +2,10 @@ package com.tsjeong.brokerage.entity.room;
 
 
 import com.tsjeong.brokerage.entity.TimeStampBase;
+import io.hypersistence.utils.hibernate.id.Tsid;
 import lombok.*;
-import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Getter
 @Entity
@@ -16,9 +16,7 @@ import javax.persistence.*;
 @EqualsAndHashCode(of = "id", callSuper = false)
 public class RoomDetail extends TimeStampBase {
 
-    @Id
-    @GeneratedValue(generator = "tsid")
-    @GenericGenerator(name = "tsid", strategy = "io.hypersistence.utils.hibernate.id.TsidGenerator")
+    @Id @Tsid
     private Long id;
 
     @OneToOne(mappedBy = "detail", fetch = FetchType.EAGER)

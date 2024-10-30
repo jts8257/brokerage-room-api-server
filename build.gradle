@@ -1,18 +1,13 @@
-buildscript {
-	ext {
-		queryDslVersion = "5.0.0"
-	}
-}
-
 plugins {
 	id 'java'
-	id 'org.springframework.boot' version '2.7.18'
+	id 'org.springframework.boot' version '3.3.5'
 	id 'io.spring.dependency-management' version '1.1.6'
-	id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"
+	id 'org.hibernate.orm' version '6.5.2.Final'
 }
 
+
 group = 'com.tsjeong'
-version = '1.1.0'
+version = '2.0.0'
 
 java {
 	sourceCompatibility = '17'
@@ -30,16 +25,13 @@ repositories {
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework.boot:spring-boot-starter-aop'
-
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
+	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0'
+	implementation 'io.hypersistence:hypersistence-utils-hibernate-60:3.7.3'
 	implementation 'io.jsonwebtoken:jjwt-api:0.12.6'
-	implementation 'io.hypersistence:hypersistence-utils-hibernate-55:3.3.0'
-
-	implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
-	implementation "com.querydsl:querydsl-apt:${queryDslVersion}"
-	implementation 'org.springdoc:springdoc-openapi-ui:1.7.0'
 
 	compileOnly 'org.projectlombok:lombok'
 
@@ -49,6 +41,10 @@ dependencies {
 	runtimeOnly 'com.h2database:h2'
 
 	annotationProcessor 'org.projectlombok:lombok'
+	annotationProcessor "com.querydsl:querydsl-apt:5.0.0:jakarta"
+	annotationProcessor "jakarta.annotation:jakarta.annotation-api"
+	annotationProcessor "jakarta.persistence:jakarta.persistence-api"
+
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 	testImplementation 'com.h2database:h2'
@@ -56,25 +52,6 @@ dependencies {
 
 tasks.named('test') {
 	useJUnitPlatform()
-}
-
-def querydslDir = "src/main/java/generated"
-
-querydsl {
-	jpa = true
-	querydslSourcesDir = querydslDir
-}
-
-sourceSets {
-	main.java.srcDir querydslDir
-}
-
-configurations {
-	querydsl.extendsFrom compileClasspath
-}
-
-compileQuerydsl {
-	options.annotationProcessorPath = configurations.querydsl
 }
 
 springBoot {

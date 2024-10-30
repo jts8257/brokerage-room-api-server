@@ -4,11 +4,11 @@ import com.tsjeong.brokerage.entity.TimeStampBase;
 import com.tsjeong.brokerage.entity.user.Users;
 
 import com.tsjeong.brokerage.service.util.StringValidator;
+import io.hypersistence.utils.hibernate.id.Tsid;
 import lombok.*;
 import org.hibernate.annotations.BatchSize;
-import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -22,9 +22,7 @@ import java.util.Objects;
 @EqualsAndHashCode(of = "id", callSuper = false)
 public class Room extends TimeStampBase {
 
-    @Id
-    @GeneratedValue(generator = "tsid")
-    @GenericGenerator(name = "tsid", strategy = "io.hypersistence.utils.hibernate.id.TsidGenerator")
+    @Id @Tsid
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)

@@ -2,10 +2,10 @@ package com.tsjeong.brokerage.entity.room;
 
 
 import com.tsjeong.brokerage.entity.TimeStampBase;
+import io.hypersistence.utils.hibernate.id.Tsid;
 import lombok.*;
-import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.math.BigDecimal;
 
 @Getter
@@ -17,9 +17,7 @@ import java.math.BigDecimal;
 @EqualsAndHashCode(of = "id", callSuper = false)
 public class RoomTransaction extends TimeStampBase {
 
-    @Id
-    @GeneratedValue(generator = "tsid")
-    @GenericGenerator(name = "tsid", strategy = "io.hypersistence.utils.hibernate.id.TsidGenerator")
+    @Id @Tsid
     private Long id;
 
     @ManyToOne(fetch = FetchType.EAGER)

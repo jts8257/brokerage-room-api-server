@@ -3,8 +3,8 @@ package com.tsjeong.brokerage.dto.room.request;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
-import javax.validation.constraints.DecimalMax;
-import javax.validation.constraints.Positive;
+import jakarta.validation.constraints.DecimalMax;
+import jakarta.validation.constraints.Positive;
 import java.math.BigDecimal;
 
 @Data
