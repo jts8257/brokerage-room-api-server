@@ -3,7 +3,7 @@ package com.tsjeong.brokerage.entity.room;
 import com.tsjeong.brokerage.entity.BooleanToYNConverter;
 import lombok.*;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Getter
 @Entity

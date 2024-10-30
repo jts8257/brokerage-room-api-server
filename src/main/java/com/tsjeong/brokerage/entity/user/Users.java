@@ -1,10 +1,10 @@
 package com.tsjeong.brokerage.entity.user;
 
 import com.tsjeong.brokerage.entity.room.Room;
+import io.hypersistence.utils.hibernate.id.Tsid;
 import lombok.*;
-import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -18,9 +18,7 @@ import java.util.Objects;
 @Builder
 public class Users {
 
-    @Id
-    @GeneratedValue(generator = "tsid")
-    @GenericGenerator(name = "tsid", strategy = "io.hypersistence.utils.hibernate.id.TsidGenerator")
+    @Id @Tsid
     private Long id;
     private String nickName;
     private String email;

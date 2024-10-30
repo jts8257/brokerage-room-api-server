@@ -1,5 +1,5 @@
 # Stage 1: Build the application using Gradle official image
-FROM gradle:8.8-jdk17-jammy AS build-env
+FROM gradle:8.8-jdk21-jammy AS build-env
 
 WORKDIR /app
 
@@ -22,7 +22,7 @@ COPY . .
 RUN ./gradlew clean build
 
 # Stage 2: Package the application using a lightweight image
-FROM openjdk:17-ea-3-buster
+FROM openjdk:21-ea-34-jdk-slim
 
 WORKDIR /app
 
@@ -41,5 +41,4 @@ USER appuser
 # Expose port 8080
 EXPOSE 8080
 
-# Run the JAR file with UTF-8 encoding
 ENTRYPOINT ["java", "-jar", "/app/app.jar"]

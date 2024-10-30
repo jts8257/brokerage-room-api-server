@@ -1,7 +1,7 @@
 package com.tsjeong.brokerage.entity;
 
 
-import javax.persistence.AttributeConverter;
+import jakarta.persistence.AttributeConverter;
 
 public class BooleanToYNConverter implements AttributeConverter<Boolean, String> {
 

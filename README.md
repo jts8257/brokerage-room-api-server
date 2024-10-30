@@ -1,6 +1,6 @@
 
 ## Application 실행하기
-어떤 환경에서든 **'반드시 실행 가능'** 해야 하며 데이터베이스도 적절히 초기화 되어야 하므로 컨티이터너 이미지로 빌드하여 실행하는 방법을 제안드립니다.
+어떤 환경에서든 Docker 가 설치되어있고, 네트워크 접근이 가능하다면 실행 가능하도록 컨테이너호 하여 실행합니다.
 
 1. Docker 설치 ['가이드 링크'](https://docs.docker.com/engine/install/)
 2. 이미지 빌드 및 컨테이너 실행
@@ -24,18 +24,14 @@ $> docker compose -f ./package/docker-compose.yml down
 **Docker Container 를 시작한 상태**에서 http://localhost:8080/swagger-ui/index.html
 
 ### 활용
-- 다음의 jwt 를 이용하여 Swagger 문서의 Authorize 로 활용함
-    - userId[1]: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjEsImlzcyI6IkFQSS1TZXJ2ZXIiLCJpYXQiOjE3MjgzOTc2ODQsImV4cCI6MTczMTMwMjQ4NH0.g12BIdABwzg4hTBm38_ekPv04GxpDATvBIPqPYvGm9k`
-    - userId[2]: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjIsImlzcyI6IkFQSS1TZXJ2ZXIiLCJpYXQiOjE3MjgzOTc3NzgsImV4cCI6MTczMTMwMjU3OH0.Q0wkZGqTaFYGohJGw4nVDPFpPrCNtTwlyxCp_iXz7Zs`
-    - userId[3]: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjMsImlzcyI6IkFQSS1TZXJ2ZXIiLCJpYXQiOjE3MjgzOTc3OTQsImV4cCI6MTczMTMwMjU5NH0.kZUaNRvWK9xNu4lV2TKFTgLnn-N1GY7j2Pa0fSbsLsA`
-- 혹은 직접 유저 목록 조회 API (GET-https://localhost/users) 통해서 유저 이메일, 비밀번호를 활용하여 (POST-http://localhost/tokens/issues) 를 통해 jwt 를 발급하여 활용함
+- 직접 유저 목록 조회 API (GET-https://localhost/users) 통해서 유저 이메일, 비밀번호를 활용하여 (POST-http://localhost/tokens/issues) 를 통해 jwt 를 발급하여 활용함
 - 발급된 jwt 에 Bearer Prefix 를 붙여서 Swagger 문서의 Authorize 로 활용함
 
 
 ---
 ## Application 구성
-- 프레임워크: SpringBoot 2.7.18
-- 언어: Java 17
+- 프레임워크: SpringBoot 3.3.6
+- 언어: Java 21
 - DB : MySQL 8, Spring Data JPA, QueryDSL
 - jwt: jjwt 라이브러리를 이용해 구현
 
