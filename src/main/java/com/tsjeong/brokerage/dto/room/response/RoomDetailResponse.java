@@ -18,4 +18,5 @@ public record RoomDetailResponse(
         String description,
         Boolean isEditable,
         Boolean isDeletable
-) {}
+) {
+}

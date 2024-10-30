@@ -57,31 +57,3 @@ $> docker compose -f ./package/docker-compose.yml down
 ├── slice # 일부 Bean 을 로드하여 성공적인 기능 동작, 예외 사항을 점검
 └── unit # POJO 에 대한 테스트, 서비스 레이어 로직에 집중한 테스트 
 ```
-
----
-## 가산 요소
-가산요소를 충족하기 위해 다음의 노력을 기울였습니다.
-
-- 모던 자바 사용
-  - Records 를 이용한 ResponseDTO 구성
-  - Stream API 활용 
-  - Optional 활용 (Repository 계층 및 테스트코드)
-  - switch 표현식 활용 (RoomQueryPageService)
-  - 텍스트 블록 활용 (RoomRepository 의 JPQL)
-  - 로컬 변수 타입 추론 var 활용 (RoomQueryController)
-</br></br>
-- 공통 오류 처리
-  - 공통 오류 코드 ErrorCode
-  - 커스텀 예외 클래스 ApplicationException
-  - ApplicationAdvice 를 이용한 공통 오류 처리
-</br></br>
-- Spring 추상화 사용
-  - AOP 를 이용한 jwt 검증 (com.tsjeong.brokerage.aop.annotation.*)
-</br></br>
-- 테스트 코드 작성
-  - 통합 테스트
-  - 슬라이스 테스트
-  - 단위 테스트
-</br></br>
-- API 문서 작성
-  - OpenAPI, SwaggerUI 를 이용한 API 문서화
